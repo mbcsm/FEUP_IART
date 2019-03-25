@@ -5,6 +5,14 @@ public class Board {
 
     Block mBlock;
 
+    int sizeX,
+        sizeY;
+
+    Node    finalCell,
+            initialCell;
+
+    Node[][] board;
+
     public Board(Block mBlock){
         this.mBlock = mBlock;
     }
@@ -14,32 +22,56 @@ public class Board {
     public void buildMatrixFromFile(String file) {
         try {
             Scanner input = new Scanner(new File("src/board/" + file));
-            int m = input.nextInt();
-            int n = input.nextInt();
-            int[][] a = new int[m][n];
+            sizeX = input.nextInt();
+            sizeY = input.nextInt();
+            board = new Node[sizeX][sizeY];
             while (input.hasNextLine()) {
-                for (int i = 0; i < m; i++) {
-                    for (int j = 0; j < n; j++) {
+                for (int i = 0; i < sizeX; i++) {
+                    for (int j = 0; j < sizeY; j++) {
                         try {
-                            a[i][j] = input.nextInt();
-                            if (a[i][j] == 3) {
+                            board[i][j] = new Node(i, j, input.nextInt());
+
+                            if (board[i][j].getType() == 3) {
                                 mBlock.setPosX(i);
+                                mBlock.setPosY(j);
+                                initialCell = board[i][j];
                             }
+                            if (board[i][j].getType() == 4) { finalCell = board[i][j]; }
                         } catch (java.util.NoSuchElementException e) {
                             e.printStackTrace();
                         }
                     }
                 }
                 System.out.println("Board Loaded Successfully!");
-                for (int i = 0; i < m; i++) {
-                    for (int j = 0; j < n; j++) {
-                        System.out.print("|" + a[i][j]);
-                    }
-                    System.out.println("|");
-                }
+                printBoard();
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public void printBoard(){
+        for (int i = 0; i < sizeX; i++) {
+            for (int j = 0; j < sizeY; j++) {
+                System.out.print("|" + board[i][j].getType());
+            }
+            System.out.println("|");
+        }
+    }
+
+    Node getFinalCell() {
+        return finalCell;
+    }
+    public Node getInitialCell() {
+        return initialCell;
+    }
+    public int getSizeX() {
+        return sizeX;
+    }
+    public int getSizeY() {
+        return sizeY;
+    }
+    public Node[][] getBoard() {
+        return board;
     }
 }
