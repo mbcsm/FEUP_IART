@@ -1,25 +1,18 @@
 import java.util.*;
 
-/**
- * A Star Algorithm
- *
- * @author Marcelo Surriabre
- * @version 2.1, 2017-02-23
- */
 public class AI {
-    private static int DEFAULT_HV_COST = 10; // Horizontal - Vertical Cost
-    private static int DEFAULT_DIAGONAL_COST = 14;
+    private static int DEFAULT_HV_COST = 1; // Horizontal - Vertical Cost
     private int hvCost;
-    private int diagonalCost;
     private Node[][] searchArea;
     private PriorityQueue<Node> openList;
     private Set<Node> closedSet;
     private Node initialNode;
     private Node finalNode;
+    private Block mBlock;
 
-    public AI(int rows, int cols, Node initialNode, Node finalNode, int hvCost, int diagonalCost) {
+    public AI(int rows, int cols, Node initialNode, Node finalNode, int hvCost) {
+        mBlock = new Block(initialNode.getCol(), initialNode.getRow());
         this.hvCost = hvCost;
-        this.diagonalCost = diagonalCost;
         setInitialNode(initialNode);
         setFinalNode(finalNode);
         this.searchArea = new Node[rows][cols];
@@ -34,7 +27,7 @@ public class AI {
     }
 
     public AI(int rows, int cols, Node initialNode, Node finalNode) {
-        this(rows, cols, initialNode, finalNode, DEFAULT_HV_COST, DEFAULT_DIAGONAL_COST);
+        this(rows, cols, initialNode, finalNode, DEFAULT_HV_COST);
     }
 
     private void setNodes() {
@@ -59,9 +52,12 @@ public class AI {
     }
 
     public List<Node> findPath() {
+        initialNode.setOrientation(Node.Orientation.VERTICAL);
         openList.add(initialNode);
+
         while (!isEmpty(openList)) {
             Node currentNode = openList.poll();
+            System.out.println(currentNode);
             closedSet.add(currentNode);
             if (isFinalNode(currentNode)) {
                 return getPath(currentNode);
@@ -73,7 +69,7 @@ public class AI {
     }
 
     private List<Node> getPath(Node currentNode) {
-        List<Node> path = new ArrayList<Node>();
+        List<Node> path = new ArrayList<>();
         path.add(currentNode);
         Node parent;
         while ((parent = currentNode.getParent()) != null) {
@@ -84,54 +80,100 @@ public class AI {
     }
 
     private void addAdjacentNodes(Node currentNode) {
-        addAdjacentUpperRow(currentNode);
-        addAdjacentMiddleRow(currentNode);
-        addAdjacentLowerRow(currentNode);
+        Node lastNode = null;
+        if(openList.size() > 0){
+            lastNode = openList.poll();
+            openList.add(lastNode);
+        }
+        addAdjacentUpperRow(currentNode, lastNode);
+        addAdjacentMiddleRow(currentNode, lastNode);
+        addAdjacentLowerRow(currentNode, lastNode);
     }
 
-    private void addAdjacentLowerRow(Node currentNode) {
+    private void addAdjacentLowerRow(Node currentNode, Node lastNode) {
         int row = currentNode.getRow();
         int col = currentNode.getCol();
         int lowerRow = row + 1;
         if (lowerRow < getSearchArea().length) {
-            checkNode(currentNode, col, lowerRow, getHvCost());
+            checkNode(currentNode, lastNode, col, lowerRow, getHvCost(), "down");
         }
     }
 
-    private void addAdjacentMiddleRow(Node currentNode) {
+    private void addAdjacentMiddleRow(Node currentNode, Node lastNode) {
         int row = currentNode.getRow();
         int col = currentNode.getCol();
         int middleRow = row;
         if (col - 1 >= 0) {
-            checkNode(currentNode, col - 1, middleRow, getHvCost());
+            checkNode(currentNode, lastNode, col - 1, middleRow, getHvCost(), "left");
         }
         if (col + 1 < getSearchArea()[0].length) {
-            checkNode(currentNode, col + 1, middleRow, getHvCost());
+            checkNode(currentNode, lastNode, col + 1, middleRow, getHvCost(), "right");
         }
     }
 
-    private void addAdjacentUpperRow(Node currentNode) {
+    private void addAdjacentUpperRow(Node currentNode, Node lastNode) {
         int row = currentNode.getRow();
         int col = currentNode.getCol();
         int upperRow = row - 1;
         if (upperRow >= 0) {
-            checkNode(currentNode, col, upperRow, getHvCost());
+            checkNode(currentNode, lastNode, col, row - 1, getHvCost(), "up");
         }
     }
 
-    private void checkNode(Node currentNode, int col, int row, int cost) {
-        Node adjacentNode = getSearchArea()[row][col];
-        if (!adjacentNode.isBlock() && !getClosedSet().contains(adjacentNode)) {
-            if (!getOpenList().contains(adjacentNode)) {
-                adjacentNode.setNodeData(currentNode, cost);
-                getOpenList().add(adjacentNode);
-            } else {
-                boolean changed = adjacentNode.checkBetterPath(currentNode, cost);
-                if (changed) {
-                    // Remove and Add the changed node, so that the PriorityQueue can sort again its
-                    // contents with the modified "finalCost" value of the modified node
-                    getOpenList().remove(adjacentNode);
+    private void checkNode(Node currentNode, Node lastNode, int col, int row, int cost, String direction) {
+        if(lastNode==null){
+            lastNode = new Node(0, 0);
+            lastNode.setOrientation(Node.Orientation.VERTICAL);
+        }
+        if(lastNode.getOrientation() == Node.Orientation.VERTICAL) {
+            Node adjacentNode = getSearchArea()[row][col];
+            Node adjacentPlusOneNode = null;
+            switch (direction) {
+                case "up":
+                    if(row - 1 >= 0) {adjacentPlusOneNode = getSearchArea()[row - 1][col];}
+                    break;
+                case "down":
+                    if(row + 1 < getSearchArea().length) {adjacentPlusOneNode = getSearchArea()[row + 1][col];}
+                    break;
+                case "left":
+                    if(col - 1 >= 0) {adjacentPlusOneNode = getSearchArea()[row][col - 1];}
+                    break;
+                case "right":
+                    if(col + 1 < getSearchArea()[0].length) {adjacentPlusOneNode = getSearchArea()[row][col + 1];}
+                    break;
+                default:
+                    return;
+            }
+            if(adjacentPlusOneNode == null){return;}
+
+            if (!adjacentNode.isBlock() && !adjacentPlusOneNode.isBlock() && !getClosedSet().contains(adjacentNode)) {
+                if (!getOpenList().contains(adjacentNode)) {
+                    adjacentNode.setNodeData(currentNode, cost);
                     getOpenList().add(adjacentNode);
+                } else {
+                    boolean changed = adjacentNode.checkBetterPath(currentNode, cost);
+                    if (changed) {
+                        // Remove and Add the changed node, so that the PriorityQueue can sort again its
+                        // contents with the modified "finalCost" value of the modified node
+                        getOpenList().remove(adjacentNode);
+                        getOpenList().add(adjacentNode);
+                    }
+                }
+            }
+        }else{
+            Node adjacentNode = getSearchArea()[row][col];
+            if (!adjacentNode.isBlock() && !getClosedSet().contains(adjacentNode)) {
+                if (!getOpenList().contains(adjacentNode)) {
+                    adjacentNode.setNodeData(currentNode, cost);
+                    getOpenList().add(adjacentNode);
+                } else {
+                    boolean changed = adjacentNode.checkBetterPath(currentNode, cost);
+                    if (changed) {
+                        // Remove and Add the changed node, so that the PriorityQueue can sort again its
+                        // contents with the modified "finalCost" value of the modified node
+                        getOpenList().remove(adjacentNode);
+                        getOpenList().add(adjacentNode);
+                    }
                 }
             }
         }
@@ -195,14 +237,6 @@ public class AI {
 
     public void setHvCost(int hvCost) {
         this.hvCost = hvCost;
-    }
-
-    private int getDiagonalCost() {
-        return diagonalCost;
-    }
-
-    private void setDiagonalCost(int diagonalCost) {
-        this.diagonalCost = diagonalCost;
     }
 }
 

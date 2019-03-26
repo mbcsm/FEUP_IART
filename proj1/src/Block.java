@@ -12,9 +12,13 @@ public class Block {
         WEST
     }
 
-    public void Block(int x, int y){
+    Block(int x, int y){
         posX = x;
         posY = y;
+        orientation = Orientation.VERTICAL;
+        dead = false;
+    }
+    Block(){
         orientation = Orientation.VERTICAL;
         dead = false;
     }

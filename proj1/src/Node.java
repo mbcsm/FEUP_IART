@@ -1,9 +1,3 @@
-/**
- * Node Class
- *
- * @author Marcelo Surriabre
- * @version 2.0, 2018-02-23
- */
 public class Node {
 
     private int g;
@@ -14,6 +8,14 @@ public class Node {
     private boolean isBlock;
     private Node parent;
     private int type;
+    private Orientation orientation;
+    enum Orientation{
+        VERTICAL,
+        NORTH,
+        SOUTH,
+        EAST,
+        WEST
+    }
 
     public Node(int row, int col, int type) {
         super();
@@ -122,5 +124,13 @@ public class Node {
 
     public int getType() {
         return type;
+    }
+
+    public void setOrientation(Orientation orientation) {
+        this.orientation = orientation;
+    }
+
+    public Orientation getOrientation() {
+        return orientation;
     }
 }

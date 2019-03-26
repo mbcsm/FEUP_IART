@@ -8,13 +8,11 @@ public class Main {
         mBoard.buildMatrixFromFile("board.txt");
         Node initialNode = mBoard.getInitialCell();
         Node finalNode = mBoard.getFinalCell();
-        int rows = 6;
-        int cols = 7;
-        AI AI = new AI(rows, cols, initialNode, finalNode);
+        AI AI = new AI(mBoard.getSizeX(), mBoard.getSizeY(), initialNode, finalNode);
         AI.setBlocks(mBoard);
         List<Node> path = AI.findPath();
         for (Node node : path) {
-            System.out.println(node);
+            //System.out.println(node);
         }
 
         //Search Area
