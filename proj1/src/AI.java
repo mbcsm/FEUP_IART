@@ -4,7 +4,7 @@ public class AI {
     private static int DEFAULT_HV_COST = 1; // Horizontal - Vertical Cost
     private int hvCost;
     private Node[][] searchArea;
-    private PriorityQueue<Node> openList;
+    private PriorityQueue<Node> openList, openListTemp;
     private Set<Node> closedSet;
     private Node initialNode;
     private Node finalNode;
@@ -17,6 +17,12 @@ public class AI {
         setFinalNode(finalNode);
         this.searchArea = new Node[rows][cols];
         this.openList = new PriorityQueue<Node>(new Comparator<Node>() {
+            @Override
+            public int compare(Node node0, Node node1) {
+                return Integer.compare(node0.getF(), node1.getF());
+            }
+        });
+        this.openListTemp = new PriorityQueue<Node>(new Comparator<Node>() {
             @Override
             public int compare(Node node0, Node node1) {
                 return Integer.compare(node0.getF(), node1.getF());
@@ -82,6 +88,7 @@ public class AI {
     private void addAdjacentNodes(Node currentNode) {
         Node lastNode = null;
         if(openList.size() > 0){
+            openList.poll();
             lastNode = openList.poll();
             openList.add(lastNode);
         }
@@ -121,27 +128,73 @@ public class AI {
     }
 
     private void checkNode(Node currentNode, Node lastNode, int col, int row, int cost, String direction) {
-        if(lastNode==null){
-            lastNode = new Node(0, 0);
-            lastNode.setOrientation(Node.Orientation.VERTICAL);
-        }
-        if(lastNode.getOrientation() == Node.Orientation.VERTICAL) {
+        if(currentNode.getOrientation() == Node.Orientation.VERTICAL) {
             Node adjacentNode = getSearchArea()[row][col];
-            Node adjacentPlusOneNode = null;
+            Node adjacentPlusOneNode = adjacentNode;
             switch (direction) {
                 case "up":
-                    if(row - 1 >= 0) {adjacentPlusOneNode = getSearchArea()[row - 1][col];}
+                    if(row - 1 >= 0) {
+                        adjacentPlusOneNode = getSearchArea()[row - 1][col];
+                        adjacentNode.setOrientation(Node.Orientation.NORTH);
+                        adjacentPlusOneNode.setOrientation(Node.Orientation.NORTH);
+                    }
                     break;
                 case "down":
-                    if(row + 1 < getSearchArea().length) {adjacentPlusOneNode = getSearchArea()[row + 1][col];}
+                    if(row + 1 < getSearchArea().length) {
+                        adjacentPlusOneNode = getSearchArea()[row + 1][col];
+                        adjacentNode.setOrientation(Node.Orientation.SOUTH);
+                        adjacentPlusOneNode.setOrientation(Node.Orientation.SOUTH);
+                    }
                     break;
                 case "left":
-                    if(col - 1 >= 0) {adjacentPlusOneNode = getSearchArea()[row][col - 1];}
+                    if(col - 1 >= 0) {
+                        adjacentPlusOneNode = getSearchArea()[row][col - 1];
+                        adjacentNode.setOrientation(Node.Orientation.EAST);
+                        adjacentPlusOneNode.setOrientation(Node.Orientation.EAST);
+                    }else{
+                        return;
+                    }
                     break;
                 case "right":
-                    if(col + 1 < getSearchArea()[0].length) {adjacentPlusOneNode = getSearchArea()[row][col + 1];}
+                    if(col + 1 < getSearchArea()[0].length) {
+                        adjacentPlusOneNode = getSearchArea()[row][col + 1];
+                        adjacentNode.setOrientation(Node.Orientation.WEST);
+                        adjacentPlusOneNode.setOrientation(Node.Orientation.WEST);
+                    }
                     break;
                 default:
+                    return;
+            }
+            if(adjacentPlusOneNode == null){return;}
+
+            if (!adjacentNode.isBlock() && !adjacentPlusOneNode.isBlock() && !getClosedSet().contains(adjacentPlusOneNode)) {
+                if (!getOpenList().contains(adjacentNode)) {
+                    adjacentPlusOneNode.setNodeData(currentNode, cost);
+                    adjacentPlusOneNode.setOtherNodeBlockIsOcuppying(adjacentNode);
+                    getOpenList().add(adjacentPlusOneNode);
+                } else {
+                    boolean changed = adjacentPlusOneNode.checkBetterPath(currentNode, cost);
+                    if (changed) {
+                        getOpenList().remove(adjacentPlusOneNode);
+                        getOpenList().add(adjacentPlusOneNode);
+                    }
+                }
+            }
+        }else if(currentNode.getOrientation() == Node.Orientation.NORTH || currentNode.getOrientation() == Node.Orientation.SOUTH) {
+            Node adjacentNode = getSearchArea()[row][col];
+            Node adjacentPlusOneNode = adjacentNode;
+            adjacentNode.setOrientation(currentNode.getOrientation());
+            adjacentPlusOneNode.setOrientation(currentNode.getOrientation());
+            switch (direction) {
+                case "left":
+                    if(currentNode.getOtherNodeBlockIsOcuppying().getCol()-1 >= 0) { adjacentPlusOneNode = getSearchArea()[currentNode.getOtherNodeBlockIsOcuppying().getRow()][currentNode.getOtherNodeBlockIsOcuppying().getCol()-1]; }
+                    break;
+                case "right":
+                    if(currentNode.getOtherNodeBlockIsOcuppying().getCol()+1 < getSearchArea().length) { adjacentPlusOneNode = getSearchArea()[currentNode.getOtherNodeBlockIsOcuppying().getRow()][currentNode.getOtherNodeBlockIsOcuppying().getCol()+1]; }
+                    break;
+                default:
+                    adjacentNode.setOrientation(Node.Orientation.VERTICAL);
+                    adjacentPlusOneNode.setOrientation(Node.Orientation.VERTICAL);
                     return;
             }
             if(adjacentPlusOneNode == null){return;}
@@ -149,6 +202,57 @@ public class AI {
             if (!adjacentNode.isBlock() && !adjacentPlusOneNode.isBlock() && !getClosedSet().contains(adjacentNode)) {
                 if (!getOpenList().contains(adjacentNode)) {
                     adjacentNode.setNodeData(currentNode, cost);
+                    adjacentNode.setOtherNodeBlockIsOcuppying(adjacentPlusOneNode);
+                    getOpenList().add(adjacentNode);
+                } else {
+                    boolean changed = adjacentNode.checkBetterPath(currentNode, cost);
+                    if (changed) {
+                        getOpenList().remove(adjacentNode);
+                        getOpenList().add(adjacentNode);
+                    }
+                }
+            }
+        }
+        else if(currentNode.getOrientation() == Node.Orientation.EAST){
+            Node adjacentNode = null;
+            Node adjacentPlusOneNode = null;
+            switch (direction) {
+                case "up":
+                    if(currentNode.getOtherNodeBlockIsOcuppying().getRow() - 1 >= 0) {
+                        adjacentPlusOneNode = getSearchArea()[currentNode.getOtherNodeBlockIsOcuppying().getRow() - 1][currentNode.getOtherNodeBlockIsOcuppying().getCol()];
+                        adjacentNode = getSearchArea()[currentNode.getOtherNodeBlockIsOcuppying().getRow() - 1][currentNode.getOtherNodeBlockIsOcuppying().getCol()];
+                        adjacentPlusOneNode.setOrientation(currentNode.getOrientation());
+                    }
+                    break;
+                case "down":
+                    if(currentNode.getOtherNodeBlockIsOcuppying().getRow() + 1 < getSearchArea()[0].length) {
+                        adjacentPlusOneNode = getSearchArea()[currentNode.getOtherNodeBlockIsOcuppying().getRow() + 1][currentNode.getOtherNodeBlockIsOcuppying().getCol()];
+                        adjacentPlusOneNode.setOrientation(currentNode.getOrientation());
+                    }
+                    break;
+                case "left":
+                    if(currentNode.getOtherNodeBlockIsOcuppying().getCol() - 1 >= 0) {
+                        adjacentPlusOneNode = getSearchArea()[currentNode.getOtherNodeBlockIsOcuppying().getRow()][currentNode.getOtherNodeBlockIsOcuppying().getCol() - 1];
+                        adjacentPlusOneNode.setOrientation(Node.Orientation.VERTICAL);
+                        adjacentNode = adjacentPlusOneNode;
+                    }
+                    break;
+                case "right":
+                    if(currentNode.getCol() + 1 >= 0) {
+                        adjacentPlusOneNode = getSearchArea()[currentNode.getOtherNodeBlockIsOcuppying().getRow()][currentNode.getOtherNodeBlockIsOcuppying().getCol() + 1];
+                        adjacentPlusOneNode.setOrientation(Node.Orientation.VERTICAL);
+                        adjacentNode = adjacentPlusOneNode;
+                    }
+                    break;
+                default:
+                    return;
+            }
+
+            assert adjacentNode != null;
+            if (!adjacentNode.isBlock() && !adjacentPlusOneNode.isBlock() && !getClosedSet().contains(adjacentNode)) {
+                if (!getOpenList().contains(adjacentNode)) {
+                    adjacentNode.setNodeData(currentNode, cost);
+                    adjacentNode.setOtherNodeBlockIsOcuppying(adjacentPlusOneNode);
                     getOpenList().add(adjacentNode);
                 } else {
                     boolean changed = adjacentNode.checkBetterPath(currentNode, cost);
@@ -160,11 +264,46 @@ public class AI {
                     }
                 }
             }
-        }else{
-            Node adjacentNode = getSearchArea()[row][col];
-            if (!adjacentNode.isBlock() && !getClosedSet().contains(adjacentNode)) {
+        }
+        else if (currentNode.getOrientation() == Node.Orientation.WEST) {
+            Node adjacentNode = null;
+            Node adjacentPlusOneNode = null;
+            switch (direction) {
+                case "up":
+                    if(currentNode.getOtherNodeBlockIsOcuppying().getRow() - 1 >= 0) {
+                        adjacentPlusOneNode = getSearchArea()[currentNode.getOtherNodeBlockIsOcuppying().getRow() - 1][currentNode.getOtherNodeBlockIsOcuppying().getCol()];
+                        adjacentPlusOneNode.setOrientation(currentNode.getOrientation());
+                    }
+                    break;
+                case "down":
+                    if(currentNode.getOtherNodeBlockIsOcuppying().getRow() + 1 < getSearchArea()[0].length) {
+                        adjacentPlusOneNode = getSearchArea()[currentNode.getOtherNodeBlockIsOcuppying().getRow() + 1][currentNode.getOtherNodeBlockIsOcuppying().getCol()];
+                        adjacentPlusOneNode.setOrientation(currentNode.getOrientation());
+                    }
+                    break;
+                case "left":
+                    if(currentNode.getOtherNodeBlockIsOcuppying().getCol() - 1 >= 0) {
+                        adjacentPlusOneNode = getSearchArea()[currentNode.getOtherNodeBlockIsOcuppying().getRow()][currentNode.getOtherNodeBlockIsOcuppying().getCol() - 1];
+                        adjacentPlusOneNode.setOrientation(Node.Orientation.VERTICAL);
+                        adjacentNode = adjacentPlusOneNode;
+                    }
+                    break;
+                case "right":
+                    if(currentNode.getCol() + 1 >= 0) {
+                        adjacentPlusOneNode = getSearchArea()[currentNode.getOtherNodeBlockIsOcuppying().getRow()][currentNode.getOtherNodeBlockIsOcuppying().getCol() + 1];
+                        adjacentPlusOneNode.setOrientation(Node.Orientation.VERTICAL);
+                        adjacentNode = adjacentPlusOneNode;
+                    }
+                    break;
+                default:
+                    return;
+            }
+
+            assert adjacentNode != null;
+            if (!adjacentNode.isBlock() && !adjacentPlusOneNode.isBlock() && !getClosedSet().contains(adjacentNode)) {
                 if (!getOpenList().contains(adjacentNode)) {
                     adjacentNode.setNodeData(currentNode, cost);
+                    adjacentNode.setOtherNodeBlockIsOcuppying(adjacentPlusOneNode);
                     getOpenList().add(adjacentNode);
                 } else {
                     boolean changed = adjacentNode.checkBetterPath(currentNode, cost);

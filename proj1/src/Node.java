@@ -16,6 +16,7 @@ public class Node {
         EAST,
         WEST
     }
+    Node otherNodeBlockIsOcuppying;
 
     public Node(int row, int col, int type) {
         super();
@@ -132,5 +133,13 @@ public class Node {
 
     public Orientation getOrientation() {
         return orientation;
+    }
+
+    public void setOtherNodeBlockIsOcuppying(Node otherNodeBlockIsOcuppying) {
+        this.otherNodeBlockIsOcuppying = otherNodeBlockIsOcuppying;
+    }
+
+    public Node getOtherNodeBlockIsOcuppying() {
+        return otherNodeBlockIsOcuppying;
     }
 }
