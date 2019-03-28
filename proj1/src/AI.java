@@ -63,10 +63,8 @@ public class AI {
 
         while (!isEmpty(openList)) {
             Node currentNode = openList.poll();
-            System.out.println(currentNode.getOrientation());
-            System.out.println(currentNode);
-            closedSet.add(currentNode);
-            if (isFinalNode(currentNode)) {
+            System.out.println(currentNode + " / " + currentNode.getParent() + " - " + currentNode.getOrientation());
+            if (isFinalNode(currentNode) && currentNode.getOrientation() == Node.Orientation.VERTICAL) {
                 return getPath(currentNode);
             } else {
                 addAdjacentNodes(currentNode);
@@ -76,6 +74,7 @@ public class AI {
     }
 
     private List<Node> getPath(Node currentNode) {
+        System.out.println("A* - Path Found");
         List<Node> path = new ArrayList<>();
         path.add(currentNode);
         Node parent;
@@ -87,49 +86,49 @@ public class AI {
     }
 
     private void addAdjacentNodes(Node currentNode) {
-        Node lastNode = null;
-        if(openList.size() > 0){
-            lastNode = openList.poll();
-            openList.add(lastNode);
-        }
-        addAdjacentUpperRow(currentNode, lastNode);
-        addAdjacentMiddleRow(currentNode, lastNode);
-        addAdjacentLowerRow(currentNode, lastNode);
+        addAdjacentUpperRow(currentNode);
+        addAdjacentMiddleRow(currentNode);
+        addAdjacentLowerRow(currentNode);
     }
 
-    private void addAdjacentLowerRow(Node currentNode, Node lastNode) {
+    private void addAdjacentLowerRow(Node currentNode) {
         int row = currentNode.getRow();
         int col = currentNode.getCol();
         int lowerRow = row + 1;
         if (lowerRow < getSearchArea().length) {
-            checkNode(currentNode, lastNode, col, lowerRow, getHvCost(), "SOUTH");
+            checkNode(currentNode, getHvCost(), "SOUTH");
         }
     }
 
-    private void addAdjacentMiddleRow(Node currentNode, Node lastNode) {
+    private void addAdjacentMiddleRow(Node currentNode) {
         int row = currentNode.getRow();
         int col = currentNode.getCol();
         int middleRow = row;
         if (col - 1 >= 0) {
-            checkNode(currentNode, lastNode, col - 1, middleRow, getHvCost(), "WEST");
+            checkNode(currentNode, getHvCost(), "WEST");
         }
         if (col + 1 < getSearchArea()[0].length) {
-            checkNode(currentNode, lastNode, col + 1, middleRow, getHvCost(), "EAST");
+            checkNode(currentNode, getHvCost(), "EAST");
         }
     }
 
-    private void addAdjacentUpperRow(Node currentNode, Node lastNode) {
+    private void addAdjacentUpperRow(Node currentNode) {
         int row = currentNode.getRow();
         int col = currentNode.getCol();
         int upperRow = row - 1;
         if (upperRow >= 0) {
-            checkNode(currentNode, lastNode, col, row - 1, getHvCost(), "NORTH");
+            checkNode(currentNode, getHvCost(), "NORTH");
         }
     }
 
-    private void checkNode(Node currentNode, Node lastNode, int col, int row, int cost, String direction) {
+    private void checkNode(Node currentNode, int cost, String direction) {
         Node adjacentNode = null;
         Node adjacentPlusOneNode = null;
+
+        /*if(currentNode.getRow() == 2  && currentNode.getCol() == 3 && currentNode.getParent().getCol() == 4 && currentNode.getParent().getRow() == 2){
+            System.out.println("-----");
+        }*/
+
         if(currentNode.getOrientation() == Node.Orientation.VERTICAL) {
             switch (direction) {
                 case "NORTH":
@@ -316,6 +315,7 @@ public class AI {
 
         if (!adjacentNode.isBlock() && !adjacentPlusOneNode.isBlock() && !getClosedSet().contains(adjacentPlusOneNode)) {
             if (!getOpenList().contains(adjacentNode)) {
+
                 adjacentPlusOneNode.setNodeData(currentNode, cost);
                 adjacentPlusOneNode.setOtherNodeBlockIsOcuppying(adjacentNode);
                 getOpenList().add(adjacentPlusOneNode);
