@@ -12,7 +12,7 @@ public class Main {
         AI.setBlocks(mBoard);
         List<Node> path = AI.findPath();
         for (Node node : path) {
-            //System.out.println(node);
+            System.out.println(node);
         }
 
         //Search Area
