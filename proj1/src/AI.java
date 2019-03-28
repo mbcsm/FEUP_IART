@@ -4,7 +4,7 @@ public class AI {
     private static int DEFAULT_HV_COST = 1; // Horizontal - Vertical Cost
     private int hvCost;
     private Node[][] searchArea;
-    private PriorityQueue<Node> openList, openListTemp;
+    private PriorityQueue<Node> openList;
     private Set<Node> closedSet;
     private Node initialNode;
     private Node finalNode;
@@ -17,12 +17,6 @@ public class AI {
         setFinalNode(finalNode);
         this.searchArea = new Node[rows][cols];
         this.openList = new PriorityQueue<Node>(new Comparator<Node>() {
-            @Override
-            public int compare(Node node0, Node node1) {
-                return Integer.compare(node0.getF(), node1.getF());
-            }
-        });
-        this.openListTemp = new PriorityQueue<Node>(new Comparator<Node>() {
             @Override
             public int compare(Node node0, Node node1) {
                 return Integer.compare(node0.getF(), node1.getF());
@@ -63,7 +57,9 @@ public class AI {
 
         while (!isEmpty(openList)) {
             Node currentNode = openList.poll();
-            System.out.println(currentNode + " / " + currentNode.getParent() + " - " + currentNode.getOrientation());
+            closedSet.add(currentNode);
+            if(currentNode.getParent()!=null)
+            System.out.println(currentNode + " / " + currentNode.getParent() + " - " + currentNode.getOrientation()+ " - " + currentNode.getParent().getOrientation());
             if (isFinalNode(currentNode) && currentNode.getOrientation() == Node.Orientation.VERTICAL) {
                 return getPath(currentNode);
             } else {
@@ -313,11 +309,37 @@ public class AI {
         }
         if(adjacentPlusOneNode == null){return;}
 
-        if (!adjacentNode.isBlock() && !adjacentPlusOneNode.isBlock() && !getClosedSet().contains(adjacentPlusOneNode)) {
-            if (!getOpenList().contains(adjacentNode)) {
+
+        Node adjacentPlusOneNodeReverse = null;
+        try {
+            adjacentPlusOneNodeReverse = (Node) adjacentPlusOneNode.clone();
+        } catch (CloneNotSupportedException e) {
+            e.printStackTrace();
+        }
+
+        switch (adjacentPlusOneNode.getOrientation()){
+            case NORTH:
+                adjacentPlusOneNodeReverse.setOrientation(Node.Orientation.SOUTH);
+                adjacentPlusOneNodeReverse.setRow(adjacentPlusOneNodeReverse.getRow()+1);
+                break;
+            case SOUTH:
+                adjacentPlusOneNodeReverse.setOrientation(Node.Orientation.NORTH);
+                adjacentPlusOneNodeReverse.setRow(adjacentPlusOneNodeReverse.getRow()-1);
+                break;
+            case EAST:
+                adjacentPlusOneNodeReverse.setOrientation(Node.Orientation.WEST);
+                adjacentPlusOneNodeReverse.setCol(adjacentPlusOneNodeReverse.getCol()+1);
+                break;
+            case WEST:
+                adjacentPlusOneNodeReverse.setOrientation(Node.Orientation.EAST);
+                adjacentPlusOneNodeReverse.setCol(adjacentPlusOneNodeReverse.getRow()-1);
+                break;
+        }
+
+        if (!adjacentNode.isBlock() && !adjacentPlusOneNode.isBlock() && !getClosedSet().contains(adjacentPlusOneNode) && !getClosedSet().contains(adjacentPlusOneNodeReverse)) {
+            if (!getOpenList().contains(adjacentPlusOneNode) && !getOpenList().contains(adjacentPlusOneNodeReverse)) {
 
                 adjacentPlusOneNode.setNodeData(currentNode, cost);
-                adjacentPlusOneNode.setOtherNodeBlockIsOcuppying(adjacentNode);
                 getOpenList().add(adjacentPlusOneNode);
             } else {
                 boolean changed = adjacentPlusOneNode.checkBetterPath(currentNode, cost);

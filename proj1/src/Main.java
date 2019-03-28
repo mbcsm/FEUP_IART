@@ -5,7 +5,7 @@ public class Main {
     public static void main(String[] args) {
         Block mBlock = new Block();
         Board mBoard = new Board(mBlock);
-        mBoard.buildMatrixFromFile("board.txt");
+        mBoard.buildMatrixFromFile("board5.txt");
         Node initialNode = mBoard.getInitialCell();
         Node finalNode = mBoard.getFinalCell();
         AI AI = new AI(mBoard.getSizeX(), mBoard.getSizeY(), initialNode, finalNode);

@@ -1,4 +1,4 @@
-public class Node {
+public class Node implements Cloneable{
 
     private int g;
     private int f;
@@ -16,7 +16,6 @@ public class Node {
         EAST,
         WEST
     }
-    Node otherNodeBlockIsOcuppying;
 
     public Node(int row, int col, int type) {
         super();
@@ -29,6 +28,9 @@ public class Node {
         this.row = row;
         this.col = col;
         this.type = -1;
+    }
+    public Node() {
+        super();
     }
 
     public void calculateHeuristic(Node finalNode) {
@@ -135,11 +137,7 @@ public class Node {
         return orientation;
     }
 
-    public void setOtherNodeBlockIsOcuppying(Node otherNodeBlockIsOcuppying) {
-        this.otherNodeBlockIsOcuppying = otherNodeBlockIsOcuppying;
-    }
-
-    public Node getOtherNodeBlockIsOcuppying() {
-        return otherNodeBlockIsOcuppying;
+    protected Object clone() throws CloneNotSupportedException {
+        return super.clone();
     }
 }
