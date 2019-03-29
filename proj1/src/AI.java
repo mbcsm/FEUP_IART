@@ -66,9 +66,9 @@ public class AI {
             movesMade++;
             Node currentNode = openList.poll();
             closedSet.add(currentNode);
-            if(currentNode.getParent()!=null)
+            /*if(currentNode.getParent()!=null)
             System.out.println(currentNode + " / " + currentNode.getParent() + " - " + currentNode.getOrientation()+ " - " + currentNode.getParent().getOrientation());
-            printBoard(currentNode);
+            printBoard(currentNode);*/
             if (isFinalNode(currentNode) && currentNode.getOrientation() == Node.Orientation.VERTICAL) {
                 return getPath(currentNode);
             } else {
@@ -103,6 +103,7 @@ public class AI {
             path.add(0, parent);
             currentNode = parent;
         }
+
 
         path.remove(0);
         boolean ended = false;
@@ -146,23 +147,22 @@ public class AI {
     }
 
     private void addAdjacentNodes(Node currentNode) throws CloneNotSupportedException {
-        checkNode(currentNode, getHvCost(), "NORTH");
-        checkNode(currentNode, getHvCost(), "SOUTH");
-        checkNode(currentNode, getHvCost(), "EAST");
-        checkNode(currentNode, getHvCost(), "WEST");
+        checkNode(currentNode, "NORTH");
+        checkNode(currentNode, "SOUTH");
+        checkNode(currentNode, "EAST");
+        checkNode(currentNode, "WEST");
     }
 
 
-    private void checkNode(Node currentNode, int cost, String direction) throws CloneNotSupportedException {
+    private void checkNode(Node currentNode, String direction) throws CloneNotSupportedException {
         Node adjacentNode = null;
         Node adjacentPlusOneNode = null;
-        if(currentNode.getParent()!= null){
-            if(currentNode.getRow() == 3 && currentNode.getCol() == 1){
-                System.out.println("--");
-            }
+        int cost = 100;
 
-        }
+        //heuristicFunc(goalState.getCor(), x) + 1 + curr.getGcost(), 1 + curr.getGcost()
+
         if(currentNode.getOrientation() == Node.Orientation.VERTICAL) {
+            //cost = 10;
             switch (direction) {
                 case "NORTH":
                     if(currentNode.getRow() - 2 >= 0) {
@@ -377,31 +377,6 @@ public class AI {
         }
         if(adjacentPlusOneNode == null){return;}
 
-        Node adjacentPlusOneNodeReverse = null;
-        try {
-            adjacentPlusOneNodeReverse = (Node) adjacentPlusOneNode.clone();
-        } catch (CloneNotSupportedException e) {
-            e.printStackTrace();
-        }
-
-        switch (adjacentPlusOneNode.getOrientation()){
-            case NORTH:
-                adjacentPlusOneNodeReverse.setOrientation(Node.Orientation.SOUTH);
-                adjacentPlusOneNodeReverse.setRow(adjacentPlusOneNodeReverse.getRow()+1);
-                break;
-            case SOUTH:
-                adjacentPlusOneNodeReverse.setOrientation(Node.Orientation.NORTH);
-                adjacentPlusOneNodeReverse.setRow(adjacentPlusOneNodeReverse.getRow()-1);
-                break;
-            case EAST:
-                adjacentPlusOneNodeReverse.setOrientation(Node.Orientation.WEST);
-                adjacentPlusOneNodeReverse.setCol(adjacentPlusOneNodeReverse.getCol()+1);
-                break;
-            case WEST:
-                adjacentPlusOneNodeReverse.setOrientation(Node.Orientation.EAST);
-                adjacentPlusOneNodeReverse.setCol(adjacentPlusOneNodeReverse.getRow()-1);
-                break;
-        }
 
         if (!adjacentNode.isBlock() && !adjacentPlusOneNode.isBlock() && !getClosedSet().contains(adjacentPlusOneNode)) {
             if (!getOpenList().contains(adjacentPlusOneNode)) {
@@ -424,7 +399,8 @@ public class AI {
                 adjacentPlusOneNode.setNodeData(currentNode, cost);
                 adjacentPlusOneNode.setId(id);
                 getOpenList().add(adjacentPlusOneNode);
-            } else {
+            }
+            else {
                 boolean changed = adjacentPlusOneNode.checkBetterPath(currentNode, cost);
                 if (changed) {
                     getOpenList().remove(adjacentPlusOneNode);
@@ -468,10 +444,6 @@ public class AI {
 
     public Set<Node> getClosedSet() {
         return closedSet;
-    }
-
-    public int getHvCost() {
-        return hvCost;
     }
 
     public int getMovesMade() {
