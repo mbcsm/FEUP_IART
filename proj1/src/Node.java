@@ -1,5 +1,6 @@
 public class Node implements Cloneable{
 
+    private int id;
     private int g;
     private int f;
     private int h;
@@ -9,6 +10,7 @@ public class Node implements Cloneable{
     private Node parent;
     private int type;
     private Orientation orientation;
+    private Orientation moveDirection;
     enum Orientation{
         VERTICAL,
         NORTH,
@@ -22,6 +24,7 @@ public class Node implements Cloneable{
         this.row = row;
         this.col = col;
         this.type = type;
+        this.id = -1;
     }
     public Node(int row, int col) {
         super();
@@ -139,5 +142,21 @@ public class Node implements Cloneable{
 
     protected Object clone() throws CloneNotSupportedException {
         return super.clone();
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setMoveDirection(Orientation moveDirection) {
+        this.moveDirection = moveDirection;
+    }
+
+    public Orientation getMoveDirection() {
+        return moveDirection;
     }
 }

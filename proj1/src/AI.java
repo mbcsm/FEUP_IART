@@ -9,8 +9,12 @@ public class AI {
     private Node initialNode;
     private Node finalNode;
     private Block mBlock;
+    Board mBoard;
 
-    public AI(int rows, int cols, Node initialNode, Node finalNode, int hvCost) {
+    private int id = 0;
+    private int movesMade;
+
+    public AI(int rows, int cols, Node initialNode, Node finalNode, int hvCost, Board mBoard) {
         mBlock = new Block(initialNode.getCol(), initialNode.getRow());
         this.hvCost = hvCost;
         setInitialNode(initialNode);
@@ -24,16 +28,18 @@ public class AI {
         });
         setNodes();
         this.closedSet = new HashSet<>();
+        this.mBoard = mBoard;
     }
 
-    public AI(int rows, int cols, Node initialNode, Node finalNode) {
-        this(rows, cols, initialNode, finalNode, DEFAULT_HV_COST);
+    public AI(int rows, int cols, Node initialNode, Node finalNode,Board mBoard) {
+        this(rows, cols, initialNode, finalNode, DEFAULT_HV_COST, mBoard);
     }
 
     private void setNodes() {
         for (int i = 0; i < searchArea.length; i++) {
             for (int j = 0; j < searchArea[0].length; j++) {
                 Node node = new Node(i, j);
+                node.setId(-1);
                 node.calculateHeuristic(getFinalNode());
                 this.searchArea[i][j] = node;
             }
@@ -51,15 +57,18 @@ public class AI {
         }
     }
 
-    public List<Node> findPath() {
+    public List<Node> findPath() throws CloneNotSupportedException {
         initialNode.setOrientation(Node.Orientation.VERTICAL);
+        initialNode.setId(0);
         openList.add(initialNode);
 
         while (!isEmpty(openList)) {
+            movesMade++;
             Node currentNode = openList.poll();
             closedSet.add(currentNode);
             if(currentNode.getParent()!=null)
             System.out.println(currentNode + " / " + currentNode.getParent() + " - " + currentNode.getOrientation()+ " - " + currentNode.getParent().getOrientation());
+            printBoard(currentNode);
             if (isFinalNode(currentNode) && currentNode.getOrientation() == Node.Orientation.VERTICAL) {
                 return getPath(currentNode);
             } else {
@@ -67,6 +76,22 @@ public class AI {
             }
         }
         return new ArrayList<Node>();
+    }
+    public void printBoard(Node currentNode){
+        for (int i = 0; i < getSearchArea().length; i++) {
+            for (int j = 0; j < getSearchArea().length; j++) {
+
+                if(currentNode.getParent ()== null){return;}
+                if(currentNode.getParent().getCol() == j && currentNode.getParent().getRow() == i){
+                    System.out.print("|*");
+                }else if(currentNode.getCol() == j && currentNode.getRow() == i){
+                    System.out.print("|+");
+                }else{
+                    System.out.print("|" + mBoard.board[i][j].getType());
+                }
+            }
+            System.out.println("|");
+        }
     }
 
     private List<Node> getPath(Node currentNode) {
@@ -78,59 +103,73 @@ public class AI {
             path.add(0, parent);
             currentNode = parent;
         }
+
+        path.remove(0);
+        boolean ended = false;
+        while(!ended){
+            for(int i = 0; i < path.size() - 2; i++){
+                switch(path.get(i).getMoveDirection()){
+                    case NORTH:
+                        if(path.get(i + 1).getMoveDirection() == Node.Orientation.SOUTH){
+                            path.remove(i);
+                            path.remove(i);
+                            i = path.size();
+                        }
+                        break;
+                    case SOUTH:
+                        if(path.get(i + 1).getMoveDirection() == Node.Orientation.NORTH){
+                            path.remove(i);
+                            path.remove(i);
+                            i = path.size();
+                        }
+                        break;
+                    case EAST:
+                        if(path.get(i + 1).getMoveDirection() == Node.Orientation.WEST){
+                            path.remove(i);
+                            path.remove(i);
+                            i = path.size();
+                        }
+                        break;
+                    case WEST:
+                        if(path.get(i + 1).getMoveDirection() == Node.Orientation.EAST){
+                            path.remove(i);
+                            path.remove(i);
+                            i = path.size();
+                        }
+                        break;
+                }
+                if(i == path.size() - 3){ended=true;}
+            }
+        }
+
         return path;
     }
 
-    private void addAdjacentNodes(Node currentNode) {
-        addAdjacentUpperRow(currentNode);
-        addAdjacentMiddleRow(currentNode);
-        addAdjacentLowerRow(currentNode);
+    private void addAdjacentNodes(Node currentNode) throws CloneNotSupportedException {
+        checkNode(currentNode, getHvCost(), "NORTH");
+        checkNode(currentNode, getHvCost(), "SOUTH");
+        checkNode(currentNode, getHvCost(), "EAST");
+        checkNode(currentNode, getHvCost(), "WEST");
     }
 
-    private void addAdjacentLowerRow(Node currentNode) {
-        int row = currentNode.getRow();
-        int col = currentNode.getCol();
-        int lowerRow = row + 1;
-        if (lowerRow < getSearchArea().length) {
-            checkNode(currentNode, getHvCost(), "SOUTH");
-        }
-    }
 
-    private void addAdjacentMiddleRow(Node currentNode) {
-        int row = currentNode.getRow();
-        int col = currentNode.getCol();
-        int middleRow = row;
-        if (col - 1 >= 0) {
-            checkNode(currentNode, getHvCost(), "WEST");
-        }
-        if (col + 1 < getSearchArea()[0].length) {
-            checkNode(currentNode, getHvCost(), "EAST");
-        }
-    }
-
-    private void addAdjacentUpperRow(Node currentNode) {
-        int row = currentNode.getRow();
-        int col = currentNode.getCol();
-        int upperRow = row - 1;
-        if (upperRow >= 0) {
-            checkNode(currentNode, getHvCost(), "NORTH");
-        }
-    }
-
-    private void checkNode(Node currentNode, int cost, String direction) {
+    private void checkNode(Node currentNode, int cost, String direction) throws CloneNotSupportedException {
         Node adjacentNode = null;
         Node adjacentPlusOneNode = null;
+        if(currentNode.getParent()!= null){
+            if(currentNode.getRow() == 3 && currentNode.getCol() == 1){
+                System.out.println("--");
+            }
 
-        /*if(currentNode.getRow() == 2  && currentNode.getCol() == 3 && currentNode.getParent().getCol() == 4 && currentNode.getParent().getRow() == 2){
-            System.out.println("-----");
-        }*/
-
+        }
         if(currentNode.getOrientation() == Node.Orientation.VERTICAL) {
             switch (direction) {
                 case "NORTH":
                     if(currentNode.getRow() - 2 >= 0) {
                         adjacentPlusOneNode = getSearchArea()[currentNode.getRow() - 2][currentNode.getCol()];
                         adjacentNode = getSearchArea()[currentNode.getRow() - 1][currentNode.getCol()];
+                        adjacentPlusOneNode = (Node)  adjacentPlusOneNode.clone();
+                        adjacentNode = (Node)  adjacentNode.clone();
                         adjacentPlusOneNode.setOrientation(Node.Orientation.NORTH);
                         adjacentNode.setOrientation(Node.Orientation.NORTH);
                     }
@@ -139,6 +178,8 @@ public class AI {
                     if(currentNode.getRow() + 2 < getSearchArea().length) {
                         adjacentPlusOneNode = getSearchArea()[currentNode.getRow() + 2][currentNode.getCol()];
                         adjacentNode = getSearchArea()[currentNode.getRow() + 1][currentNode.getCol()];
+                        adjacentPlusOneNode = (Node)  adjacentPlusOneNode.clone();
+                        adjacentNode = (Node)  adjacentNode.clone();
                         adjacentPlusOneNode.setOrientation(Node.Orientation.SOUTH);
                         adjacentNode.setOrientation(Node.Orientation.SOUTH);
                     }
@@ -147,6 +188,8 @@ public class AI {
                     if(currentNode.getCol() - 2 >= 0) {
                         adjacentPlusOneNode = getSearchArea()[currentNode.getRow()][currentNode.getCol() - 2];
                         adjacentNode = getSearchArea()[currentNode.getRow()][currentNode.getCol() - 1];
+                        adjacentPlusOneNode = (Node)  adjacentPlusOneNode.clone();
+                        adjacentNode = (Node)  adjacentNode.clone();
                         adjacentPlusOneNode.setOrientation(Node.Orientation.WEST);
                         adjacentNode.setOrientation(Node.Orientation.WEST);
                     }
@@ -155,6 +198,8 @@ public class AI {
                     if(currentNode.getCol() + 2 < getSearchArea().length) {
                         adjacentPlusOneNode = getSearchArea()[currentNode.getRow()][currentNode.getCol() + 2];
                         adjacentNode = getSearchArea()[currentNode.getRow()][currentNode.getCol() + 1];
+                        adjacentPlusOneNode = (Node)  adjacentPlusOneNode.clone();
+                        adjacentNode = (Node)  adjacentNode.clone();
                         adjacentPlusOneNode.setOrientation(Node.Orientation.EAST);
                         adjacentNode.setOrientation(Node.Orientation.EAST);
                     }
@@ -168,6 +213,7 @@ public class AI {
                 case "NORTH":
                     if(currentNode.getRow() - 1 >= 0) {
                         adjacentNode = getSearchArea()[currentNode.getRow() - 1][currentNode.getCol()];
+                        adjacentNode = (Node)  adjacentNode.clone();
                         adjacentNode.setOrientation(Node.Orientation.VERTICAL);
                         adjacentPlusOneNode = adjacentNode;
                     }
@@ -183,6 +229,8 @@ public class AI {
                     if(currentNode.getCol() - 1 >= 0 && currentNode.getRow() + 1 < getSearchArea().length) {
                         adjacentPlusOneNode = getSearchArea()[currentNode.getRow()][currentNode.getCol() - 1];
                         adjacentNode = getSearchArea()[currentNode.getRow() + 1][currentNode.getCol() - 1];
+                        adjacentPlusOneNode = (Node)  adjacentPlusOneNode.clone();
+                        adjacentNode = (Node)  adjacentNode.clone();
                         adjacentPlusOneNode.setOrientation(Node.Orientation.NORTH);
                         adjacentNode.setOrientation(Node.Orientation.NORTH);
                     }
@@ -191,6 +239,8 @@ public class AI {
                     if(currentNode.getCol() + 1 < getSearchArea().length && currentNode.getRow() + 1 < getSearchArea().length) {
                         adjacentPlusOneNode = getSearchArea()[currentNode.getRow()][currentNode.getCol() + 1];
                         adjacentNode = getSearchArea()[currentNode.getRow() + 1][currentNode.getCol() + 1];
+                        adjacentPlusOneNode = (Node)  adjacentPlusOneNode.clone();
+                        adjacentNode = (Node)  adjacentNode.clone();
                         adjacentPlusOneNode.setOrientation(Node.Orientation.NORTH);
                         adjacentNode.setOrientation(Node.Orientation.NORTH);
                     }
@@ -204,6 +254,7 @@ public class AI {
                 case "NORTH":
                     if(currentNode.getRow() - 2 >= 0) {
                         adjacentNode = getSearchArea()[currentNode.getRow() - 2][currentNode.getCol()];
+                        adjacentNode = (Node)  adjacentNode.clone();
                         adjacentNode.setOrientation(Node.Orientation.VERTICAL);
                         adjacentPlusOneNode = adjacentNode;
                     }
@@ -211,6 +262,7 @@ public class AI {
                 case "SOUTH":
                     if(currentNode.getRow() + 1 < getSearchArea().length) {
                         adjacentNode = getSearchArea()[currentNode.getRow() + 1][currentNode.getCol()];
+                        adjacentNode = (Node)  adjacentNode.clone();
                         adjacentNode.setOrientation(Node.Orientation.VERTICAL);
                         adjacentPlusOneNode = adjacentNode;
                     }
@@ -219,6 +271,8 @@ public class AI {
                     if(currentNode.getCol() - 1 >= 0 && currentNode.getRow() - 1 >= 0) {
                         adjacentPlusOneNode = getSearchArea()[currentNode.getRow()][currentNode.getCol() - 1];
                         adjacentNode = getSearchArea()[currentNode.getRow() - 1][currentNode.getCol() - 1];
+                        adjacentPlusOneNode = (Node)  adjacentPlusOneNode.clone();
+                        adjacentNode = (Node)  adjacentNode.clone();
                         adjacentPlusOneNode.setOrientation(Node.Orientation.SOUTH);
                         adjacentNode.setOrientation(Node.Orientation.SOUTH);
                     }
@@ -227,6 +281,8 @@ public class AI {
                     if(currentNode.getCol() + 1 < getSearchArea().length && currentNode.getRow() - 1 >= 0) {
                         adjacentPlusOneNode = getSearchArea()[currentNode.getRow()][currentNode.getCol() + 1];
                         adjacentNode = getSearchArea()[currentNode.getRow() - 1][currentNode.getCol() + 1];
+                        adjacentPlusOneNode = (Node)  adjacentPlusOneNode.clone();
+                        adjacentNode = (Node)  adjacentNode.clone();
                         adjacentPlusOneNode.setOrientation(Node.Orientation.SOUTH);
                         adjacentNode.setOrientation(Node.Orientation.SOUTH);
                     }
@@ -241,6 +297,8 @@ public class AI {
                     if(currentNode.getRow() - 1 >= 0 && currentNode.getCol() - 1 >= 0) {
                         adjacentPlusOneNode = getSearchArea()[currentNode.getRow() - 1][currentNode.getCol()];
                         adjacentNode = getSearchArea()[currentNode.getRow() - 1][currentNode.getCol() - 1];
+                        adjacentPlusOneNode = (Node)  adjacentPlusOneNode.clone();
+                        adjacentNode = (Node)  adjacentNode.clone();
                         adjacentPlusOneNode.setOrientation(Node.Orientation.EAST);
                         adjacentNode.setOrientation(Node.Orientation.EAST);
                     }
@@ -249,6 +307,8 @@ public class AI {
                     if(currentNode.getRow() + 1 < getSearchArea().length && currentNode.getCol() - 1 >= 0) {
                         adjacentPlusOneNode = getSearchArea()[currentNode.getRow() + 1][currentNode.getCol()];
                         adjacentNode = getSearchArea()[currentNode.getRow() + 1][currentNode.getCol() - 1];
+                        adjacentPlusOneNode = (Node)  adjacentPlusOneNode.clone();
+                        adjacentNode = (Node)  adjacentNode.clone();
                         adjacentPlusOneNode.setOrientation(Node.Orientation.EAST);
                         adjacentNode.setOrientation(Node.Orientation.EAST);
                     }
@@ -256,6 +316,7 @@ public class AI {
                 case "WEST":
                     if(currentNode.getCol() - 2 >= 0) {
                         adjacentNode = getSearchArea()[currentNode.getRow()][currentNode.getCol() - 2];
+                        adjacentNode = (Node)  adjacentNode.clone();
                         adjacentNode.setOrientation(Node.Orientation.VERTICAL);
                         adjacentPlusOneNode = adjacentNode;
                     }
@@ -263,6 +324,7 @@ public class AI {
                 case "EAST":
                     if(currentNode.getCol() + 1 < getSearchArea().length) {
                         adjacentNode = getSearchArea()[currentNode.getRow()][currentNode.getCol() + 1];
+                        adjacentNode = (Node)  adjacentNode.clone();
                         adjacentNode.setOrientation(Node.Orientation.VERTICAL);
                         adjacentPlusOneNode = adjacentNode;
                     }
@@ -277,6 +339,8 @@ public class AI {
                     if(currentNode.getRow() - 1 >= 0 && currentNode.getCol() + 1 < getSearchArea().length) {
                         adjacentPlusOneNode = getSearchArea()[currentNode.getRow() - 1][currentNode.getCol()];
                         adjacentNode = getSearchArea()[currentNode.getRow() - 1][currentNode.getCol() + 1];
+                        adjacentPlusOneNode = (Node)  adjacentPlusOneNode.clone();
+                        adjacentNode = (Node)  adjacentNode.clone();
                         adjacentPlusOneNode.setOrientation(Node.Orientation.WEST);
                         adjacentNode.setOrientation(Node.Orientation.WEST);
                     }
@@ -285,6 +349,8 @@ public class AI {
                     if(currentNode.getRow() + 1 < getSearchArea().length && currentNode.getCol() + 1 < getSearchArea().length) {
                         adjacentPlusOneNode = getSearchArea()[currentNode.getRow() + 1][currentNode.getCol()];
                         adjacentNode = getSearchArea()[currentNode.getRow() + 1][currentNode.getCol() + 1];
+                        adjacentPlusOneNode = (Node)  adjacentPlusOneNode.clone();
+                        adjacentNode = (Node)  adjacentNode.clone();
                         adjacentPlusOneNode.setOrientation(Node.Orientation.WEST);
                         adjacentNode.setOrientation(Node.Orientation.WEST);
                     }
@@ -292,6 +358,7 @@ public class AI {
                 case "WEST":
                     if(currentNode.getCol() - 1 >= 0) {
                         adjacentNode = getSearchArea()[currentNode.getRow()][currentNode.getCol() - 1];
+                        adjacentNode = (Node)  adjacentNode.clone();
                         adjacentNode.setOrientation(Node.Orientation.VERTICAL);
                         adjacentPlusOneNode = adjacentNode;
                     }
@@ -299,6 +366,7 @@ public class AI {
                 case "EAST":
                     if(currentNode.getCol() + 2 < getSearchArea().length) {
                         adjacentNode = getSearchArea()[currentNode.getRow()][currentNode.getCol() + 2];
+                        adjacentNode = (Node)  adjacentNode.clone();
                         adjacentNode.setOrientation(Node.Orientation.VERTICAL);
                         adjacentPlusOneNode = adjacentNode;
                     }
@@ -308,7 +376,6 @@ public class AI {
             }
         }
         if(adjacentPlusOneNode == null){return;}
-
 
         Node adjacentPlusOneNodeReverse = null;
         try {
@@ -336,10 +403,26 @@ public class AI {
                 break;
         }
 
-        if (!adjacentNode.isBlock() && !adjacentPlusOneNode.isBlock() && !getClosedSet().contains(adjacentPlusOneNode) && !getClosedSet().contains(adjacentPlusOneNodeReverse)) {
-            if (!getOpenList().contains(adjacentPlusOneNode) && !getOpenList().contains(adjacentPlusOneNodeReverse)) {
+        if (!adjacentNode.isBlock() && !adjacentPlusOneNode.isBlock() && !getClosedSet().contains(adjacentPlusOneNode)) {
+            if (!getOpenList().contains(adjacentPlusOneNode)) {
+
+                switch (direction){
+                    case "NORTH":
+                        adjacentPlusOneNode.setMoveDirection(Node.Orientation.NORTH);
+                        break;
+                    case "SOUTH":
+                        adjacentPlusOneNode.setMoveDirection(Node.Orientation.SOUTH);
+                        break;
+                    case "EAST":
+                        adjacentPlusOneNode.setMoveDirection(Node.Orientation.EAST);
+                        break;
+                    case "WEST":
+                        adjacentPlusOneNode.setMoveDirection(Node.Orientation.WEST);
+                        break;
+                }
 
                 adjacentPlusOneNode.setNodeData(currentNode, cost);
+                adjacentPlusOneNode.setId(id);
                 getOpenList().add(adjacentPlusOneNode);
             } else {
                 boolean changed = adjacentPlusOneNode.checkBetterPath(currentNode, cost);
@@ -363,10 +446,6 @@ public class AI {
         this.searchArea[row][col].setBlock(true);
     }
 
-    public Node getInitialNode() {
-        return initialNode;
-    }
-
     public void setInitialNode(Node initialNode) {
         this.initialNode = initialNode;
     }
@@ -383,32 +462,20 @@ public class AI {
         return searchArea;
     }
 
-    public void setSearchArea(Node[][] searchArea) {
-        this.searchArea = searchArea;
-    }
-
     public PriorityQueue<Node> getOpenList() {
         return openList;
-    }
-
-    public void setOpenList(PriorityQueue<Node> openList) {
-        this.openList = openList;
     }
 
     public Set<Node> getClosedSet() {
         return closedSet;
     }
 
-    public void setClosedSet(Set<Node> closedSet) {
-        this.closedSet = closedSet;
-    }
-
     public int getHvCost() {
         return hvCost;
     }
 
-    public void setHvCost(int hvCost) {
-        this.hvCost = hvCost;
+    public int getMovesMade() {
+        return movesMade;
     }
 }
 
