@@ -13,7 +13,7 @@ public class Main {
 
         Block mBlock = new Block();
         Board mBoard = new Board(mBlock);
-        mBoard.buildMatrixFromFile("board10.txt");
+        mBoard.buildMatrixFromFile("board5.txt");
         Node initialNode = mBoard.getInitialCell();
         Node finalNode = mBoard.getFinalCell();
         AI AI = new AI(mBoard.getSizeX(), mBoard.getSizeY(), initialNode, finalNode, mBoard);
@@ -31,7 +31,7 @@ public class Main {
 
         for (Node node : path) {
             if(node.getMoveDirection() != null)
-            System.out.println(node.getMoveDirection());
+            System.out.println(node + " / " +  node.getMoveDirection() + "   |   " + node.getOrientation() );
         }
     }
 }

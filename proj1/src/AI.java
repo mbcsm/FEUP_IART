@@ -66,32 +66,14 @@ public class AI {
             movesMade++;
             Node currentNode = openList.poll();
             closedSet.add(currentNode);
-            /*if(currentNode.getParent()!=null)
-            System.out.println(currentNode + " / " + currentNode.getParent() + " - " + currentNode.getOrientation()+ " - " + currentNode.getParent().getOrientation());
-            printBoard(currentNode);*/
-            if (isFinalNode(currentNode) && currentNode.getOrientation() == Node.Orientation.VERTICAL) {
+            openList.remove(currentNode);
+            if (currentNode.getRow() == getFinalNode().getRow() && currentNode.getCol() == getFinalNode().getCol() && currentNode.getOrientation() == Node.Orientation.VERTICAL) {
                 return getPath(currentNode);
             } else {
                 addAdjacentNodes(currentNode);
             }
         }
-        return new ArrayList<Node>();
-    }
-    public void printBoard(Node currentNode){
-        for (int i = 0; i < getSearchArea().length; i++) {
-            for (int j = 0; j < getSearchArea().length; j++) {
-
-                if(currentNode.getParent ()== null){return;}
-                if(currentNode.getParent().getCol() == j && currentNode.getParent().getRow() == i){
-                    System.out.print("|*");
-                }else if(currentNode.getCol() == j && currentNode.getRow() == i){
-                    System.out.print("|+");
-                }else{
-                    System.out.print("|" + mBoard.board[i][j].getType());
-                }
-            }
-            System.out.println("|");
-        }
+        return new ArrayList<>();
     }
 
     private List<Node> getPath(Node currentNode) {
@@ -157,12 +139,13 @@ public class AI {
     private void checkNode(Node currentNode, String direction) throws CloneNotSupportedException {
         Node adjacentNode = null;
         Node adjacentPlusOneNode = null;
-        int cost = 100;
 
-        //heuristicFunc(goalState.getCor(), x) + 1 + curr.getGcost(), 1 + curr.getGcost()
+        int cost = 20;
+        if(currentNode.getCol() == 1 && currentNode.getRow() == 2){
+            System.out.println("ad");
+        }
 
         if(currentNode.getOrientation() == Node.Orientation.VERTICAL) {
-            //cost = 10;
             switch (direction) {
                 case "NORTH":
                     if(currentNode.getRow() - 2 >= 0) {
@@ -376,7 +359,9 @@ public class AI {
             }
         }
         if(adjacentPlusOneNode == null){return;}
-
+        if(adjacentPlusOneNode.getOrientation()== Node.Orientation.VERTICAL ){
+            cost=10;
+        }
 
         if (!adjacentNode.isBlock() && !adjacentPlusOneNode.isBlock() && !getClosedSet().contains(adjacentPlusOneNode)) {
             if (!getOpenList().contains(adjacentPlusOneNode)) {
@@ -396,22 +381,20 @@ public class AI {
                         break;
                 }
 
+                adjacentPlusOneNode.calculateHeuristic(finalNode);
                 adjacentPlusOneNode.setNodeData(currentNode, cost);
                 adjacentPlusOneNode.setId(id);
+                adjacentPlusOneNode.setMoves(currentNode.getMoves()+1);
                 getOpenList().add(adjacentPlusOneNode);
-            }
-            else {
-                boolean changed = adjacentPlusOneNode.checkBetterPath(currentNode, cost);
-                if (changed) {
-                    getOpenList().remove(adjacentPlusOneNode);
-                    getOpenList().add(adjacentPlusOneNode);
+            }else{
+                Node adjacentPlusOneUpdated = (Node) adjacentPlusOneNode.clone();
+                adjacentPlusOneUpdated.setNodeData(currentNode, cost);
+                if (adjacentPlusOneUpdated.getF() > adjacentPlusOneNode.getF()) { // costs from current node are cheaper than previous costs
+                    adjacentPlusOneNode.setParent(currentNode);
+                    adjacentPlusOneNode.setNodeData(currentNode, cost);// set current node as previous for this node
                 }
             }
         }
-    }
-
-    private boolean isFinalNode(Node currentNode) {
-        return currentNode.equals(finalNode);
     }
 
     private boolean isEmpty(PriorityQueue<Node> openList) {

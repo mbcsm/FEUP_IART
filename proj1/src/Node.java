@@ -9,6 +9,7 @@ public class Node implements Cloneable{
     private boolean isBlock;
     private Node parent;
     private int type;
+    private int moves;
     private Orientation orientation;
     private Orientation moveDirection;
     enum Orientation{
@@ -25,12 +26,17 @@ public class Node implements Cloneable{
         this.col = col;
         this.type = type;
         this.id = -1;
+        this.moves = 0;
+        this.g = 1;
+        this.h = 1;
     }
     public Node(int row, int col) {
         super();
         this.row = row;
         this.col = col;
         this.type = -1;
+        this.g = 1;
+        this.h = 1;
     }
     public Node() {
         super();
@@ -38,6 +44,7 @@ public class Node implements Cloneable{
 
     public void calculateHeuristic(Node finalNode) {
         this.h = Math.abs(finalNode.getRow() - getRow()) + Math.abs(finalNode.getCol() - getCol());
+        calculateFinalCost();
     }
 
     public void setNodeData(Node currentNode, int cost) {
@@ -47,18 +54,8 @@ public class Node implements Cloneable{
         calculateFinalCost();
     }
 
-    public boolean checkBetterPath(Node currentNode, int cost) {
-        int gCost = currentNode.getG() + cost;
-        if (gCost < getG()) {
-            setNodeData(currentNode, cost);
-            return true;
-        }
-        return false;
-    }
-
     private void calculateFinalCost() {
-        int finalCost = getG() + getH();
-        setF(finalCost);
+            this.f = getG() + getH();
     }
 
     @Override
@@ -158,5 +155,13 @@ public class Node implements Cloneable{
 
     public Orientation getMoveDirection() {
         return moveDirection;
+    }
+
+    public int getMoves() {
+        return moves;
+    }
+
+    public void setMoves(int moves) {
+        this.moves = moves;
     }
 }
