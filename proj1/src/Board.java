@@ -35,6 +35,7 @@ public class Board {
                                 mBlock.setPosX(i);
                                 mBlock.setPosY(j);
                                 initialCell = board[i][j];
+                                initialCell.setOrientation(Node.Orientation.VERTICAL);
                             }
                             if (board[i][j].getType() == 4) { finalCell = board[i][j]; }
                         } catch (java.util.NoSuchElementException e) {

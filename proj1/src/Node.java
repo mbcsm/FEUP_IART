@@ -12,6 +12,7 @@ public class Node implements Cloneable{
     private int moves;
     private Orientation orientation;
     private Orientation moveDirection;
+    private Boolean visisted = false;
     enum Orientation{
         VERTICAL,
         NORTH,
@@ -61,7 +62,7 @@ public class Node implements Cloneable{
     @Override
     public boolean equals(Object arg0) {
         Node other = (Node) arg0;
-        return this.getRow() == other.getRow() && this.getCol() == other.getCol();
+        return this.getRow() == other.getRow() && this.getCol() == other.getCol() && this.getOrientation() == other.getOrientation();
     }
 
     @Override
@@ -163,5 +164,13 @@ public class Node implements Cloneable{
 
     public void setMoves(int moves) {
         this.moves = moves;
+    }
+
+    public Boolean getVisisted() {
+        return visisted;
+    }
+
+    public void setVisisted(Boolean visisted) {
+        this.visisted = visisted;
     }
 }

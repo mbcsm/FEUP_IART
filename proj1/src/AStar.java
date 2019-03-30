@@ -1,6 +1,6 @@
 import java.util.*;
 
-public class AI {
+public class AStar {
     private static int DEFAULT_HV_COST = 1; // Horizontal - Vertical Cost
     private int hvCost;
     private Node[][] searchArea;
@@ -14,7 +14,7 @@ public class AI {
     private int id = 0;
     private int movesMade;
 
-    public AI(int rows, int cols, Node initialNode, Node finalNode, int hvCost, Board mBoard) {
+    public AStar(int rows, int cols, Node initialNode, Node finalNode, int hvCost, Board mBoard) {
         mBlock = new Block(initialNode.getCol(), initialNode.getRow());
         this.hvCost = hvCost;
         setInitialNode(initialNode);
@@ -31,7 +31,7 @@ public class AI {
         this.mBoard = mBoard;
     }
 
-    public AI(int rows, int cols, Node initialNode, Node finalNode,Board mBoard) {
+    public AStar(int rows, int cols, Node initialNode, Node finalNode,Board mBoard) {
         this(rows, cols, initialNode, finalNode, DEFAULT_HV_COST, mBoard);
     }
 
@@ -77,7 +77,7 @@ public class AI {
     }
 
     private List<Node> getPath(Node currentNode) {
-        System.out.println("A* - Path Found");
+        System.out.println("PATH FOUND");
         List<Node> path = new ArrayList<>();
         path.add(currentNode);
         Node parent;
@@ -88,42 +88,7 @@ public class AI {
 
 
         path.remove(0);
-        boolean ended = false;
-        while(!ended){
-            for(int i = 0; i < path.size() - 2; i++){
-                switch(path.get(i).getMoveDirection()){
-                    case NORTH:
-                        if(path.get(i + 1).getMoveDirection() == Node.Orientation.SOUTH){
-                            path.remove(i);
-                            path.remove(i);
-                            i = path.size();
-                        }
-                        break;
-                    case SOUTH:
-                        if(path.get(i + 1).getMoveDirection() == Node.Orientation.NORTH){
-                            path.remove(i);
-                            path.remove(i);
-                            i = path.size();
-                        }
-                        break;
-                    case EAST:
-                        if(path.get(i + 1).getMoveDirection() == Node.Orientation.WEST){
-                            path.remove(i);
-                            path.remove(i);
-                            i = path.size();
-                        }
-                        break;
-                    case WEST:
-                        if(path.get(i + 1).getMoveDirection() == Node.Orientation.EAST){
-                            path.remove(i);
-                            path.remove(i);
-                            i = path.size();
-                        }
-                        break;
-                }
-                if(i == path.size() - 3){ended=true;}
-            }
-        }
+
 
         return path;
     }
@@ -137,13 +102,12 @@ public class AI {
 
 
     private void checkNode(Node currentNode, String direction) throws CloneNotSupportedException {
+
+
         Node adjacentNode = null;
         Node adjacentPlusOneNode = null;
 
         int cost = 20;
-        if(currentNode.getCol() == 1 && currentNode.getRow() == 2){
-            System.out.println("ad");
-        }
 
         if(currentNode.getOrientation() == Node.Orientation.VERTICAL) {
             switch (direction) {
@@ -380,6 +344,7 @@ public class AI {
                         adjacentPlusOneNode.setMoveDirection(Node.Orientation.WEST);
                         break;
                 }
+
 
                 adjacentPlusOneNode.calculateHeuristic(finalNode);
                 adjacentPlusOneNode.setNodeData(currentNode, cost);
