@@ -1,31 +1,30 @@
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Stack;
+import java.util.*;
 
 public class DFS {
     Node startNode;
     Node goalNode;
     Board mBoard;
+    private ArrayList<Node> closedSet;
     public DFS(Node start, Node goalNode, Board mBoard){
         this.startNode = start;
         this.goalNode = goalNode;
         this.mBoard = mBoard;
     }
 
-
     public List<Node> findPath() throws CloneNotSupportedException {
 
+        this.closedSet = new ArrayList<>();
         Stack<Node> stack = new Stack<Node>();
         stack.add(startNode);
         startNode.setVisisted(true);
         while (!stack.isEmpty()) {
             Node current = stack.firstElement();
             stack.remove(current);
+            closedSet.add(current);
 
             if (current.getCol() == goalNode.getCol() && current.getRow() == goalNode.getRow() && current.getOrientation() == Node.Orientation.VERTICAL) {
                 return getPath(current);
             }
-
             ArrayList<Node> nodes = new ArrayList<>();
             ArrayList<Node> nodesPlusOne = new ArrayList<>();
             Node[] nodesNorth = new Utils().checkNode(current, "NORTH", mBoard.getBoard());
@@ -57,11 +56,9 @@ public class DFS {
             for (int i = 0; i < nodes.size(); i++) {
                 Node node = nodes.get(i);
                 Node nodePlusOne = nodesPlusOne.get(i);
-                if (node != null && !nodePlusOne.getVisisted() && !isBlock(node) && !isBlock(nodePlusOne)) {
-                    stack.add(nodePlusOne);
-                    nodePlusOne.setVisisted(true);
+                if (!this.closedSet.contains(nodePlusOne) && !isBlock(node) && !isBlock(nodePlusOne)) {
+                    stack.push(nodePlusOne);
                     nodePlusOne.setParent(current);
-
                 }
             }
         }

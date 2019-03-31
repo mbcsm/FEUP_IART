@@ -102,8 +102,7 @@ public class AStar {
 
 
     private void checkNode(Node currentNode, String direction) throws CloneNotSupportedException {
-
-
+        
         Node adjacentNode = null;
         Node adjacentPlusOneNode = null;
 
@@ -351,6 +350,7 @@ public class AStar {
                 adjacentPlusOneNode.setId(id);
                 adjacentPlusOneNode.setMoves(currentNode.getMoves()+1);
                 getOpenList().add(adjacentPlusOneNode);
+                movesMade++;
             }else{
                 Node adjacentPlusOneUpdated = (Node) adjacentPlusOneNode.clone();
                 adjacentPlusOneUpdated.setNodeData(currentNode, cost);

@@ -60,9 +60,12 @@ public class Node implements Cloneable{
     }
 
     @Override
-    public boolean equals(Object arg0) {
-        Node other = (Node) arg0;
-        return this.getRow() == other.getRow() && this.getCol() == other.getCol() && this.getOrientation() == other.getOrientation();
+    public boolean equals(Object o){
+        if(o instanceof Node){
+            Node other = (Node) o;
+            return this.getRow() == other.getRow() && this.getCol() == other.getCol() && this.getOrientation() == other.getOrientation();
+        }
+        return false;
     }
 
     @Override

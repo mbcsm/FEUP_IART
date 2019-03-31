@@ -4,6 +4,7 @@ public class Main {
 
     static String boardName = "board10.txt";
     public static void main(String[] args) throws CloneNotSupportedException {
+
         runAStar();
         runDFS();
     }
