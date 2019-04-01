@@ -169,10 +169,6 @@ public class Node implements Cloneable{
         this.moves = moves;
     }
 
-    public Boolean getVisisted() {
-        return visisted;
-    }
-
     public void setVisisted(Boolean visisted) {
         this.visisted = visisted;
     }

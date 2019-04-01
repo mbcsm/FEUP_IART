@@ -1,11 +1,12 @@
 import java.util.*;
 
-public class DFS {
+public class BFS {
     Node startNode;
     Node goalNode;
     Board mBoard;
+    int movesMade = 0;
     private ArrayList<Node> closedSet;
-    public DFS(Node start, Node goalNode, Board mBoard){
+    public BFS(Node start, Node goalNode, Board mBoard){
         this.startNode = start;
         this.goalNode = goalNode;
         this.mBoard = mBoard;
@@ -58,6 +59,7 @@ public class DFS {
                 Node nodePlusOne = nodesPlusOne.get(i);
                 if (!this.closedSet.contains(nodePlusOne) && !isBlock(node) && !isBlock(nodePlusOne)) {
                     stack.push(nodePlusOne);
+                    movesMade++;
                     nodePlusOne.setParent(current);
                 }
             }
@@ -85,5 +87,9 @@ public class DFS {
         path.remove(0);
 
         return path;
+    }
+
+    public int getMovesMade() {
+        return movesMade;
     }
 }
