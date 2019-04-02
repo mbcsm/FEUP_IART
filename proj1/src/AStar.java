@@ -1,25 +1,25 @@
 import java.util.*;
 
+
+/**
+ * Implementation of the A* Algorithm
+ */
 public class AStar {
-    private static int DEFAULT_HV_COST = 1; // Horizontal - Vertical Cost
-    private int hvCost;
+    int verticalCost;
+    int horizontalCost;
     private Node[][] searchArea;
     private PriorityQueue<Node> openList;
     private ArrayList<Node> closetList;
     private Node initialNode;
     private Node finalNode;
-    private Block mBlock;
-    Board mBoard;
 
-    private int id = 0;
     private int movesMade;
 
-    public AStar(int rows, int cols, Node initialNode, Node finalNode, int hvCost, Board mBoard) {
-        mBlock = new Block(initialNode.getCol(), initialNode.getRow());
-        this.hvCost = hvCost;
+    public AStar(Node initialNode, Node finalNode, Board mBoard, int verticalCost, int horizontalCost) {
+
         setInitialNode(initialNode);
         setFinalNode(finalNode);
-        this.searchArea = new Node[rows][cols];
+        this.searchArea = new Node[mBoard.getBoard().length][mBoard.getBoard().length];
         this.openList = new PriorityQueue<Node>(new Comparator<Node>() {
             @Override
             public int compare(Node node0, Node node1) {
@@ -28,23 +28,24 @@ public class AStar {
         });
         setNodes();
         this.closetList = new ArrayList<>();
-        this.mBoard = mBoard;
+        this.verticalCost = verticalCost;
+        this.horizontalCost = horizontalCost;
     }
 
-    public AStar(int rows, int cols, Node initialNode, Node finalNode,Board mBoard) {
-        this(rows, cols, initialNode, finalNode, DEFAULT_HV_COST, mBoard);
-    }
-
+    /**
+     * Calculates the heuristics of all the playable nodes
+     * also populates the matrix searchArea
+     */
     private void setNodes() {
         for (int i = 0; i < searchArea.length; i++) {
             for (int j = 0; j < searchArea[0].length; j++) {
                 Node node = new Node(i, j);
-                node.setId(-1);
                 node.calculateHeuristic(getFinalNode());
                 this.searchArea[i][j] = node;
             }
         }
     }
+
 
     public void setBlocks(Board mBoard) {
         for (int i = 0; i < mBoard.getSizeX(); i++) {
@@ -57,9 +58,15 @@ public class AStar {
         }
     }
 
+    /**
+     * Loop that's the bones of the A* Algorithm, it is what starts the process
+     * Whenever the block reaches the final position it returns the path, but while it doesn't find the best
+     * path it calls addAdjacentNodes() and tries to find nodes to add to the priorityQueue.
+     * @return
+     * @throws CloneNotSupportedException
+     */
     public List<Node> findPath() throws CloneNotSupportedException {
         initialNode.setOrientation(Node.Orientation.VERTICAL);
-        initialNode.setId(0);
         openList.add(initialNode);
 
         while (!isEmpty(openList)) {
@@ -68,7 +75,7 @@ public class AStar {
             closetList.add(currentNode);
             openList.remove(currentNode);
             if (currentNode.getRow() == getFinalNode().getRow() && currentNode.getCol() == getFinalNode().getCol() && currentNode.getOrientation() == Node.Orientation.VERTICAL) {
-                return getPath(currentNode);
+                return new Utils().getPath(currentNode);
             } else {
                 addAdjacentNodes(currentNode);
             }
@@ -76,23 +83,11 @@ public class AStar {
         return new ArrayList<>();
     }
 
-    private List<Node> getPath(Node currentNode) {
-        System.out.println("PATH FOUND");
-        List<Node> path = new ArrayList<>();
-        path.add(currentNode);
-        Node parent;
-        while ((parent = currentNode.getParent()) != null) {
-            path.add(0, parent);
-            currentNode = parent;
-        }
-
-
-        path.remove(0);
-
-
-        return path;
-    }
-
+    /**
+     * Simply calls checkNode() for every movement possible
+     * @param currentNode
+     * @throws CloneNotSupportedException
+     */
     private void addAdjacentNodes(Node currentNode) throws CloneNotSupportedException {
         checkNode(currentNode, "NORTH");
         checkNode(currentNode, "SOUTH");
@@ -101,6 +96,17 @@ public class AStar {
     }
 
 
+    /**
+     * Checks if the movement is possible or not.
+     * For a move to be possible the block has to fall within the are of the board
+     * and not fall within an empty field, all of this while taking into
+     * consideration the fact the block's 1x1x2 form factor.
+     *
+     * If it is valid calculate the cost and add it to the priorityQueue
+     * @param currentNode
+     * @param direction
+     * @throws CloneNotSupportedException
+     */
     private void checkNode(Node currentNode, String direction) throws CloneNotSupportedException {
 
 
@@ -122,7 +128,7 @@ public class AStar {
         Node adjacentNode = null;
         Node adjacentPlusOneNode = null;
 
-        int cost = 10;
+        int cost = this.horizontalCost;
 
         if(currentNode.getOrientation() == Node.Orientation.VERTICAL) {
             switch (direction) {
@@ -339,7 +345,7 @@ public class AStar {
         }
         if(adjacentPlusOneNode == null){return;}
         if(adjacentPlusOneNode.getOrientation()== Node.Orientation.VERTICAL ){
-            cost=5;
+            cost = this.verticalCost;
         }
 
         if (!adjacentNode.isBlock() && !adjacentPlusOneNode.isBlock() && !getClosedSet().contains(adjacentPlusOneNode)) {
@@ -363,7 +369,6 @@ public class AStar {
 
                 adjacentPlusOneNode.calculateHeuristic(finalNode);
                 adjacentPlusOneNode.setNodeData(currentNode, cost);
-                adjacentPlusOneNode.setId(id);
                 getOpenList().add(adjacentPlusOneNode);
                 movesMade++;
             }else{

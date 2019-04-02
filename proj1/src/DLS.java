@@ -2,25 +2,33 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
 
-public class IDDFS {
+/**
+ * Implementation of the DLS Algorithm
+ */
+public class DLS {
 
     Node startNode;
     Node goalNode;
     Board mBoard;
-    int maxSearchDistance = 1;
+    int maxSearchDistance;
     int movesMade = 0;
     private Node bestNode;
     boolean pathFound = false;
-    int pathFoundLevel = 0;
 
-    public IDDFS(Node start, Node goalNode, Board mBoard, int maxSearchDistance){
+    public DLS(Node start, Node goalNode, Board mBoard, int maxSearchDistance){
         this.startNode = start;
         this.goalNode = goalNode;
         this.mBoard = mBoard;
         this.maxSearchDistance = maxSearchDistance;
     }
 
-    private boolean isTargetFound;
+    /**
+     * Loop that's the bones of the BFS Algorithm, it is what starts the process
+     * Whenever the block reaches the final position it returns the path, but while it doesn't find the best
+     * path it tries to find nodes to add to the stack.
+     * @return
+     * @throws CloneNotSupportedException
+     */
     public List<Node> findPath() throws CloneNotSupportedException {
 
         bestNode = new Node();
@@ -75,7 +83,7 @@ public class IDDFS {
             for (int i = 0; i < nodes.size(); i++) {
                 Node node = nodes.get(i);
                 Node nodePlusOne = nodesPlusOne.get(i);
-                if (!isBlock(node) && !isBlock(nodePlusOne)) {
+                if (!isBlock(node) && !isBlock(nodePlusOne) && !nodePlusOne.equals(current.getParent())) {
                     nodePlusOne.setParent(current);
                     nodePlusOne.setMoves(current.getMoves()+1);
                     openStack.push(nodePlusOne);
@@ -85,7 +93,7 @@ public class IDDFS {
         }
 
         if(pathFound){
-            return getPath(bestNode);
+            return new Utils().getPath(bestNode);
         }else{
             return null;
         }
@@ -99,20 +107,6 @@ public class IDDFS {
         return true;
     }
 
-    private List<Node> getPath(Node currentNode) {
-        System.out.println("PATH FOUND");
-        List<Node> path = new ArrayList<>();
-        path.add(currentNode);
-        Node parent;
-        while ((parent = currentNode.getParent()) != null) {
-            path.add(0, parent);
-            currentNode = parent;
-        }
-
-        path.remove(0);
-
-        return path;
-    }
 
     public int getMovesMade() {
         return movesMade;

@@ -1,17 +1,30 @@
 import java.util.List;
 
+/**
+ * Main Class Of the project, everything runs from here.
+ * All the classes of the algorithms used are called
+ * and the constants used by them are also set at the top, you are
+ * welcomed to change them.
+ *
+ */
 public class Main {
 
-    private static int IDDFS_MAX_SEARCH_DISTANCE = 20;
+    private static int DLS_MAX_SEARCH_DISTANCE = 14;
+    private static int A_VERTICAL_COST = 5;
+    private static int A_HORIZONTAL_COST = 10;
 
-    static String boardName = "board10.txt";
+    private static String boardName = "board10.txt";
+
     public static void main(String[] args) throws CloneNotSupportedException {
-
         runAStar();
         runBFS();
-        runDFS();
+        runDLS();
     }
 
+    /**
+     * Runs the A* Algorithm and displays the data from it
+     * @throws CloneNotSupportedException
+     */
     private static void runAStar() throws CloneNotSupportedException {
 
         System.out.println("=====================================");
@@ -20,12 +33,11 @@ public class Main {
 
         long startTime = System.currentTimeMillis();
 
-        Block mBlock = new Block();
-        Board mBoard = new Board(mBlock);
+        Board mBoard = new Board();
         mBoard.buildMatrixFromFile(boardName);
         Node initialNode = mBoard.getInitialCell();
         Node finalNode = mBoard.getFinalCell();
-        AStar AStar = new AStar(mBoard.getSizeX(), mBoard.getSizeY(), initialNode, finalNode, mBoard);
+        AStar AStar = new AStar(initialNode, finalNode, mBoard, A_VERTICAL_COST, A_HORIZONTAL_COST);
         AStar.setBlocks(mBoard);
         List<Node> path = AStar.findPath();
 
@@ -41,6 +53,10 @@ public class Main {
         }
     }
 
+    /**
+     * Runs the BFS Algorithm and displays the data from it
+     * @throws CloneNotSupportedException
+     */
     private static void runBFS() throws CloneNotSupportedException {
 
         System.out.println("=====================================");
@@ -49,8 +65,7 @@ public class Main {
 
         long startTime = System.currentTimeMillis();
 
-        Block mBlock = new Block();
-        Board mBoard = new Board(mBlock);
+        Board mBoard = new Board();
         mBoard.buildMatrixFromFile(boardName);
         Node initialNode = mBoard.getInitialCell();
         Node finalNode = mBoard.getFinalCell();
@@ -70,27 +85,30 @@ public class Main {
         }
     }
 
-    private static void runDFS() throws CloneNotSupportedException {
+    /**
+     * Runs the DLS Algorithm and displays the data from it
+     * @throws CloneNotSupportedException
+     */
+    private static void runDLS() throws CloneNotSupportedException {
 
         System.out.println("=====================================");
-        System.out.println("                IDDFS                  ");
+        System.out.println("                DLS                  ");
         System.out.println("=====================================");
 
         long startTime = System.currentTimeMillis();
 
-        Block mBlock = new Block();
-        Board mBoard = new Board(mBlock);
+        Board mBoard = new Board();
         mBoard.buildMatrixFromFile(boardName);
         Node initialNode = mBoard.getInitialCell();
         Node finalNode = mBoard.getFinalCell();
-        IDDFS IDDFS = new IDDFS(initialNode, finalNode, mBoard, IDDFS_MAX_SEARCH_DISTANCE);
-        List<Node> path = IDDFS.findPath();
+        DLS DLS = new DLS(initialNode, finalNode, mBoard, DLS_MAX_SEARCH_DISTANCE);
+        List<Node> path = DLS.findPath();
 
 
         long stopTime = System.currentTimeMillis();
         long elapsedTime = stopTime - startTime;
 
-        System.out.println("NODES CREATED = " + IDDFS.getMovesMade());
+        System.out.println("NODES CREATED = " + DLS.getMovesMade());
         System.out.println("TIME SPENT = " + elapsedTime + "ms");
 
         if(path == null){

@@ -1,9 +1,11 @@
 import java.io.File;
 import java.util.Scanner;
 
+/**
+ * The Board class is responsible from both parsing the board file
+ * into a usable matrix and printing it onto the console
+ */
 public class Board {
-
-    Block mBlock;
 
     int sizeX,
         sizeY;
@@ -13,9 +15,8 @@ public class Board {
 
     Node[][] board;
 
-    public Board(Block mBlock){
-        this.mBlock = mBlock;
-    }
+    public Board(){}
+
     /**
      * Parses the Board file into a matrix
      */
@@ -32,8 +33,6 @@ public class Board {
                             board[i][j] = new Node(i, j, input.nextInt());
 
                             if (board[i][j].getType() == 3) {
-                                mBlock.setPosX(i);
-                                mBlock.setPosY(j);
                                 initialCell = board[i][j];
                                 initialCell.setOrientation(Node.Orientation.VERTICAL);
                             }
