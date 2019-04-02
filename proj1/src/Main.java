@@ -2,9 +2,9 @@ import java.util.List;
 
 public class Main {
 
-    private static int IDDFS_MAX_SEARCH_DISTANCE = 2;
+    private static int IDDFS_MAX_SEARCH_DISTANCE = 20;
 
-    static String boardName = "board11.txt";
+    static String boardName = "board10.txt";
     public static void main(String[] args) throws CloneNotSupportedException {
 
         runAStar();
@@ -93,9 +93,13 @@ public class Main {
         System.out.println("NODES CREATED = " + IDDFS.getMovesMade());
         System.out.println("TIME SPENT = " + elapsedTime + "ms");
 
-        for (Node node : path) {
-            if(node.getMoveDirection() != null)
-                System.out.println(node + " / " +  node.getMoveDirection());
+        if(path == null){
+            System.out.println("ERROR 404: couldn't find path, you need to let me go deeper");
+        }else{
+            for (Node node : path) {
+                if(node.getMoveDirection() != null)
+                    System.out.println(node + " / " +  node.getMoveDirection());
+            }
         }
     }
 }
