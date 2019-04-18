@@ -28,11 +28,11 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="FileEditorManager">
-    <leaf>
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/ACTV1/Board.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="528">
+            <state relative-caret-position="960">
               <caret line="49" column="3" selection-start-line="49" selection-start-column="3" selection-end-line="56" selection-end-column="5" />
             </state>
           </provider>
@@ -41,8 +41,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/ACTV1/AStar.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="300">
-              <caret line="148" column="18" selection-start-line="148" selection-start-column="18" selection-end-line="148" selection-end-column="18" />
+            <state relative-caret-position="80">
+              <caret line="7" column="6" selection-start-line="7" selection-start-column="6" selection-end-line="7" selection-end-column="6" />
               <folding>
                 <element signature="e#658#659#0" expanded="true" />
                 <element signature="e#740#741#0" expanded="true" />
@@ -54,7 +54,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/ACTV1/Main.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="129">
+            <state relative-caret-position="720">
               <caret line="36" selection-start-line="36" selection-end-line="36" />
             </state>
           </provider>
@@ -63,7 +63,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/ACTV1/Node.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="312">
+            <state relative-caret-position="860">
               <caret line="43" selection-start-line="43" selection-end-line="43" />
               <folding>
                 <element signature="e#1951#1952#0" expanded="true" />
@@ -98,7 +98,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -117,19 +116,16 @@
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="ACTV1" type="462c0819:PsiDirectoryNode" />
             </path>
-            <path>
-              <item name="ACT1" type="b2602c69:ProjectViewProjectNode" />
-              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
-            </path>
           </expand>
           <select />
         </subPane>
       </pane>
       <pane id="Scope" />
+      <pane id="PackagesPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1555605271898" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1555610031160" />
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -172,15 +168,14 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="0" width="1920" height="1050" extended-state="6" />
-    <editor active="true" />
+    <frame x="-8" y="-8" width="2576" height="1426" extended-state="6" />
     <layout>
       <window_info id="Designer" order="0" />
       <window_info id="UI Designer" order="1" />
       <window_info id="Capture Tool" order="2" />
       <window_info id="Favorites" order="3" side_tool="true" />
       <window_info id="Image Layers" order="4" />
-      <window_info content_ui="combo" id="Project" order="5" visible="true" weight="0.2497332" />
+      <window_info content_ui="combo" id="Project" order="5" visible="true" weight="0.25158983" />
       <window_info id="Structure" order="6" side_tool="true" weight="0.25" />
       <window_info anchor="bottom" id="Terminal" order="0" />
       <window_info anchor="bottom" id="Event Log" order="1" side_tool="true" />
@@ -230,21 +225,21 @@
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/src/ACTV1/Board.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="528">
+        <state relative-caret-position="960">
           <caret line="49" column="3" selection-start-line="49" selection-start-column="3" selection-end-line="56" selection-end-column="5" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/ACTV1/Main.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="129">
+        <state relative-caret-position="720">
           <caret line="36" selection-start-line="36" selection-end-line="36" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/ACTV1/Node.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="312">
+        <state relative-caret-position="860">
           <caret line="43" selection-start-line="43" selection-end-line="43" />
           <folding>
             <element signature="e#1951#1952#0" expanded="true" />
@@ -255,8 +250,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/ACTV1/AStar.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="300">
-          <caret line="148" column="18" selection-start-line="148" selection-start-column="18" selection-end-line="148" selection-end-column="18" />
+        <state relative-caret-position="80">
+          <caret line="7" column="6" selection-start-line="7" selection-start-column="6" selection-end-line="7" selection-end-column="6" />
           <folding>
             <element signature="e#658#659#0" expanded="true" />
             <element signature="e#740#741#0" expanded="true" />
