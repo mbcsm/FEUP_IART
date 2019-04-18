@@ -9,7 +9,7 @@ import java.util.List;
  */
 public class Main {
 
-    private static int DLS_MAX_SEARCH_DISTANCE = 14;
+    private static int DLS_MAX_SEARCH_DISTANCE = 20;
     private static int A_VERTICAL_COST = 5;
     private static int A_HORIZONTAL_COST = 10;
 
