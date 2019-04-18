@@ -9,8 +9,7 @@ import java.util.Scanner;
  */
 public class Board {
 
-    int sizeX,
-        sizeY;
+    int size;
 
     Node emptyCell;
 
@@ -24,14 +23,13 @@ public class Board {
     void buildMatrixFromFile(String file) {
         try {
             Scanner input = new Scanner(new File("src/board/" + file));
-            sizeX = input.nextInt();
-            sizeY = input.nextInt();
-            board = new Node[sizeX][sizeY];
+            size = input.nextInt();
+            board = new Node[size][size];
             while (input.hasNextLine()) {
-                for (int i = 0; i < sizeX; i++) {
-                    for (int j = 0; j < sizeY; j++) {
+                for (int i = 0; i < size; i++) {
+                    for (int j = 0; j < size; j++) {
                         try {
-                            board[i][j] = new Node(i, j);
+                            board[i][j] = new Node(size, i, j);
                             board[i][j].setNumber(input.nextInt());
                             if (board[i][j].getNumber() == 0) { emptyCell = board[i][j]; }
                         } catch (java.util.NoSuchElementException e) {
@@ -48,8 +46,8 @@ public class Board {
     }
 
     public void printBoard(){
-        for (int i = 0; i < sizeX; i++) {
-            for (int j = 0; j < sizeY; j++) {
+        for (int i = 0; i < size; i++) {
+            for (int j = 0; j < size; j++) {
                 System.out.print("|" + board[i][j].getNumber());
             }
             System.out.println("|");

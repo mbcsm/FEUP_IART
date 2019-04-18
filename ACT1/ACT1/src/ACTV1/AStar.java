@@ -35,10 +35,9 @@ public class AStar {
     private void setNodes() {
         for (int i = 0; i < mBoard.getBoard().length; i++) {
             for (int j = 0; j < mBoard.getBoard().length; j++) {
-                Node node = new Node(i, j);
+                Node node = new Node(mBoard.size, i, j);
                 node.setBoard(mBoard.getBoard().clone());
                 node.setNumber(mBoard.getBoard()[i][j].getNumber());
-                node.setFinalPos();
                 node.calculateHeuristic();
                 emptyCell.getBoard()[i][j] = node;
             }
@@ -58,10 +57,9 @@ public class AStar {
         while (!isEmpty(openList)) {
             movesMade++;
             Node currentNode = openList.poll();
-            printBoard(currentNode.getBoard());
             closetList.add(currentNode);
             openList.remove(currentNode);
-            if (checkSolvedPath(currentNode)) {
+            if (new Utils().checkSolvedPath(currentNode)) {
                 return new Utils().getPath(currentNode);
             } else {
                 addAdjacentNodes(currentNode);
@@ -69,27 +67,8 @@ public class AStar {
         }
         return new ArrayList<>();
     }
-    public void printBoard(Node[][] board){
-        for (int i = 0; i < board.length; i++) {
-            for (int j = 0; j < board.length; j++) {
-                System.out.print("|" + board[i][j].getNumber());
-            }
-            System.out.println("|");
-        }
-    }
 
-    private boolean checkSolvedPath(Node currentNode) {
-        int number = 1;
-        for(int i = 0; i < currentNode.getBoard().length; i++){
-            for(int j = 0; j < currentNode.getBoard().length; j++){
-                if(currentNode.getBoard()[i][j].getNumber() != number && i != currentNode.getBoard().length-1 && j != currentNode.getBoard().length-1){
-                    return false;
-                }
-                number++;
-            }
-        }
-        return true;
-    }
+
 
     /**
      * Simply calls checkNode() for every movement possible
@@ -133,30 +112,30 @@ public class AStar {
                 break;
         }
 
-        Node adjacentNode = (Node) currentNode.clone();
-        int number, x, y, originalX = currentNode.getRow(), originalY = currentNode.getCol();
 
+
+        int number, x, y, originalX = currentNode.getRow(), originalY = currentNode.getCol();
         switch (direction) {
             case "NORTH":
-                if(currentNode.getRow() - 2 >= 0) {
+                if(currentNode.getRow() - 1 >= 0) {
                     x = currentNode.getRow() - 1;
                     y = currentNode.getCol();
                 }else{return;}
                 break;
             case "SOUTH":
-                if(currentNode.getRow() + 2 < currentNode.getBoard().length) {
+                if(currentNode.getRow() + 1 < currentNode.getBoard().length) {
                     x = currentNode.getRow() + 1;
                     y = currentNode.getCol();
                 }else{return;}
                 break;
             case "WEST":
-                if(currentNode.getCol() - 2 >= 0) {
+                if(currentNode.getCol() - 1 >= 0) {
                     x = currentNode.getRow();
                     y = currentNode.getCol() - 1;
                 }else{return;}
                 break;
             case "EAST":
-                if(currentNode.getCol() + 2 < currentNode.getBoard().length) {
+                if(currentNode.getCol() + 1 < currentNode.getBoard().length) {
                     x = currentNode.getRow();
                     y = currentNode.getCol() + 1;
                 }else{return;}
@@ -166,7 +145,13 @@ public class AStar {
         }
         if(x == -1 || y == -1)return;
 
+        Node adjacentNode = new Node(mBoard.size, x, y);
+        for(int i=0; i < currentNode.getBoard().length; i++)
+            for(int j=0; j<currentNode.getBoard().length; j++)
+                adjacentNode.getBoard()[i][j]= (Node) currentNode.getBoard()[i][j].clone();
+
         number = adjacentNode.getBoard()[x][y].getNumber();
+        int numberBefore = adjacentNode.getBoard()[originalX][originalY].getNumber();
         adjacentNode.getBoard()[x][y].setNumber(0);
         adjacentNode.getBoard()[originalX][originalY].setNumber(number);
 
@@ -186,17 +171,12 @@ public class AStar {
                     break;
             }
 
-            //adjacentNode.calculateHeuristic(finalNode);
+            adjacentNode.calculateG(x, y, originalX, originalY);
+            adjacentNode.calculateHeuristic();
+            adjacentNode.calculateFinalCost();
             adjacentNode.setNodeData(currentNode, this.moveCost);
             getOpenList().add(adjacentNode);
             movesMade++;
-        }else{
-            Node adjacentUpdated = (Node) adjacentNode.clone();
-            adjacentUpdated.setNodeData(currentNode, this.moveCost);
-            if (adjacentUpdated.getF() > adjacentNode.getF()) { // costs from current node are cheaper than previous costs
-                adjacentNode.setParent(currentNode);
-                adjacentNode.setNodeData(currentNode, this.moveCost);// set current node as previous for this node
-            }
         }
 
     }

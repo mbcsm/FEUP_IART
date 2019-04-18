@@ -10,13 +10,11 @@ import java.util.List;
  *
  */
 public class Main {
-    private static int A_VERTICAL_COST = 10;
-    private static int A_HORIZONTAL_COST = 10;
-
-    private static String boardName = "board1.txt";
+    private static String boardName = "board4.txt";
 
     public static void main(String[] args) throws CloneNotSupportedException {
         runAStar();
+        runBFS();
     }
 
     /**
@@ -29,12 +27,12 @@ public class Main {
         System.out.println("               A STAR                ");
         System.out.println("=====================================");
 
-        long startTime = System.currentTimeMillis();
 
         Board mBoard = new Board();
         mBoard.buildMatrixFromFile(boardName);
         Node emptyCell = mBoard.getEmptyCell();
         AStar AStar = new AStar(emptyCell, mBoard);
+        long startTime = System.currentTimeMillis();
         List<Node> path = AStar.findPath();
 
         long stopTime = System.currentTimeMillis();
@@ -45,7 +43,38 @@ public class Main {
 
         for (Node node : path) {
             if(node.getMoveDirection() != null)
-            System.out.println(node + " / " +  node.getMoveDirection());
+            System.out.println(node);
+        }
+    }
+
+    /**
+     * Runs the BFS Algorithm and displays the data from it
+     * @throws CloneNotSupportedException
+     */
+    private static void runBFS() throws CloneNotSupportedException {
+
+        System.out.println("=====================================");
+        System.out.println("                BFS                  ");
+        System.out.println("=====================================");
+
+        long startTime = System.currentTimeMillis();
+
+        Board mBoard = new Board();
+        mBoard.buildMatrixFromFile(boardName);
+        Node emptyCell = mBoard.getEmptyCell();
+        BFS BFS = new BFS(emptyCell, mBoard);
+        List<Node> path = BFS.findPath();
+
+
+        long stopTime = System.currentTimeMillis();
+        long elapsedTime = stopTime - startTime;
+
+        System.out.println("NODES CREATED = " + BFS.getMovesMade());
+        System.out.println("TIME SPENT = " + elapsedTime + "ms");
+
+        for (Node node : path) {
+            if(node.getMoveDirection() != null)
+                System.out.println(node);
         }
     }
 }

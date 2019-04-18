@@ -7,8 +7,6 @@ public class Node implements Cloneable{
     private int h;
     private int row;
     private int col;
-    private int finalRow;
-    private int finalCol;
     private Node parent;
     private Orientation moveDirection;
     int number;
@@ -23,30 +21,16 @@ public class Node implements Cloneable{
 
     }
 
-    Node(int row, int col) {
+    Node(int size, int row, int col) {
         super();
         this.row = row;
         this.col = col;
         this.g = 1;
         this.h = 1;
+        this.board = new Node[size][size];
     }
 
-    void calculateHeuristic() {
-        this.h = Math.abs(finalRow - getRow()) + Math.abs(finalCol - getCol());
-        calculateFinalCost();
-    }
-    void setFinalPos(){
-        int number = 1;
-        for(int i = 0; i < this.board.length; i++){
-            for(int j = 0; i < this.board.length; i++){
-                if(this.number == number && i != this.board.length-1 && j != this.board.length-1){
-                    finalRow = i;
-                    finalCol = j;
-                    return;
-                }
-            }
-        }
-    }
+
 
     void setNodeData(Node currentNode, int cost) {
         int gCost = currentNode.getG() + cost;
@@ -55,7 +39,24 @@ public class Node implements Cloneable{
         calculateFinalCost();
     }
 
-    private void calculateFinalCost() {
+    void calculateHeuristic() {
+        this.h = Math.abs(board.length - 1 - getRow()) + Math.abs(board.length - 1 - getCol());
+        calculateFinalCost();
+    }
+    void calculateG(int x, int y, int originalX, int originalY) {
+        g = 5;
+        int it = 1;
+        for(int i = 0; i < this.board.length; i++){
+            for(int j = 0; i < this.board.length; i++) {
+                if(this.board[i][j].getNumber() == it){
+                    if(x == i && y == j){g = 0;}
+                    if(originalX == i && originalY == j){g = 10;}
+                }
+                it++;
+            }
+        }
+    }
+    public void calculateFinalCost() {
             this.f = getG() + getH();
     }
 
@@ -63,9 +64,15 @@ public class Node implements Cloneable{
     public boolean equals(Object o){
         if(o instanceof Node){
             Node other = (Node) o;
-            return this.getRow() == other.getRow() && this.getCol() == other.getCol();
+            for(int i = 0; i < this.board.length; i++){
+                for(int j = 0; i < this.board.length; i++) {
+                    if(this.getBoard()[i][j] != other.getBoard()[i][j]){
+                        return false;
+                    }
+                }
+            }
         }
-        return false;
+        return true;
     }
 
 
@@ -115,7 +122,13 @@ public class Node implements Cloneable{
 
     @Override
     public String toString() {
-        return "Node [row=" + row + ", col=" + col + "]";
+        for (int i = 0; i < this.board.length; i++) {
+            for (int j = 0; j < this.board.length; j++) {
+                System.out.print("|" + board[i][j].getNumber());
+            }
+            System.out.println("|");
+        }
+        return "Node [MOVE=" + moveDirection + "]";
     }
 
     protected Object clone() throws CloneNotSupportedException {
