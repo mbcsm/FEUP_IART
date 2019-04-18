@@ -29,7 +29,6 @@ public class Node implements Cloneable{
         this.col = col;
         this.g = 1;
         this.h = 1;
-        setFinalPos();
     }
 
     void calculateHeuristic() {
@@ -39,10 +38,11 @@ public class Node implements Cloneable{
     void setFinalPos(){
         int number = 1;
         for(int i = 0; i < this.board.length; i++){
-            for(int j = 0; true; i++){
+            for(int j = 0; i < this.board.length; i++){
                 if(this.number == number && i != this.board.length-1 && j != this.board.length-1){
                     finalRow = i;
                     finalCol = j;
+                    return;
                 }
             }
         }
