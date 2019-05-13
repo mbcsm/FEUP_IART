@@ -2,23 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="caecbc71-3c1d-4736-9ad4-4178435ba28e" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/ant.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/description.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/uiDesigner.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ACT1.iml" beforeDir="false" afterPath="$PROJECT_DIR$/ACT1.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ACTV1/AStar.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ACTV1/AStar.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ACTV1/Node.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ACTV1/Node.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ACTV1/board/board1.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/board/board1.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../TP1/proj1/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../TP1/proj1/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../TP1/proj1/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../TP1/proj1/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../TP1/proj1/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/../TP1/proj1/src/Main.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -28,6 +12,7 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="FileEditorManager">
+<<<<<<< Updated upstream:ACT1/ACT1/.idea/workspace.xml
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300" />
   </component>
   <component name="FileTemplateManagerImpl">
@@ -41,6 +26,46 @@
     <findStrings>
       <find>[1]</find>
     </findStrings>
+=======
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/ACTV1/Board.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="912">
+              <caret line="49" column="3" selection-start-line="49" selection-start-column="3" selection-end-line="56" selection-end-column="5" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/ACTV1/AStar.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="834">
+              <caret line="148" column="18" selection-start-line="148" selection-start-column="18" selection-end-line="148" selection-end-column="18" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/ACTV1/Main.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="684">
+              <caret line="36" selection-start-line="36" selection-end-line="36" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/ACTV1/Node.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="817">
+              <caret line="43" selection-start-line="43" selection-end-line="43" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
+>>>>>>> Stashed changes:ACT1/.idea/workspace.xml
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
@@ -107,6 +132,7 @@
     </panes>
   </component>
   <component name="PropertiesComponent">
+<<<<<<< Updated upstream:ACT1/ACT1/.idea/workspace.xml
     <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1555625665331" />
   </component>
   <component name="RecentsManager">
@@ -114,6 +140,9 @@
       <recent name="C:\Users\Manel\Desktop\FEUP\IART\FEUP_IART\ACT1\src\ACTV1" />
       <recent name="C:\Users\Manel\Desktop\FEUP\IART\FEUP_IART\ACT1\src\board" />
     </key>
+=======
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1555605350055" />
+>>>>>>> Stashed changes:ACT1/.idea/workspace.xml
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -163,7 +192,11 @@
       <window_info id="Capture Tool" order="2" />
       <window_info id="Favorites" order="3" side_tool="true" />
       <window_info id="Image Layers" order="4" />
+<<<<<<< Updated upstream:ACT1/ACT1/.idea/workspace.xml
       <window_info content_ui="combo" id="Project" order="5" visible="true" weight="0.2535771" />
+=======
+      <window_info content_ui="combo" id="Project" order="5" visible="true" weight="0.2524013" />
+>>>>>>> Stashed changes:ACT1/.idea/workspace.xml
       <window_info id="Structure" order="6" side_tool="true" weight="0.25" />
       <window_info anchor="bottom" id="Terminal" order="0" />
       <window_info anchor="bottom" id="Event Log" order="1" side_tool="true" />
@@ -171,8 +204,13 @@
       <window_info anchor="bottom" id="Version Control" order="3" />
       <window_info anchor="bottom" id="Message" order="4" />
       <window_info anchor="bottom" id="Find" order="5" />
+<<<<<<< Updated upstream:ACT1/ACT1/.idea/workspace.xml
       <window_info anchor="bottom" id="Run" order="6" weight="0.34029388" />
       <window_info anchor="bottom" id="Debug" order="7" weight="0.39907193" />
+=======
+      <window_info anchor="bottom" id="Run" order="6" weight="0.329718" />
+      <window_info anchor="bottom" id="Debug" order="7" weight="0.3991323" />
+>>>>>>> Stashed changes:ACT1/.idea/workspace.xml
       <window_info anchor="bottom" id="Cvs" order="8" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="9" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="10" />
@@ -207,24 +245,35 @@
   <component name="editorHistoryManager">
     <entry file="jar://C:/Program Files/Java/jdk1.8.0_201/src.zip!/java/util/ArrayList.java">
       <provider selected="true" editor-type-id="text-editor">
+<<<<<<< Updated upstream:ACT1/ACT1/.idea/workspace.xml
         <state relative-caret-position="422">
           <caret line="302" column="19" selection-start-line="302" selection-start-column="19" selection-end-line="302" selection-end-column="19" />
           <folding>
             <element signature="e#11079#11080#0" expanded="true" />
             <element signature="e#11117#11118#0" expanded="true" />
           </folding>
+=======
+        <state relative-caret-position="912">
+          <caret line="49" column="3" selection-start-line="49" selection-start-column="3" selection-end-line="56" selection-end-column="5" />
+>>>>>>> Stashed changes:ACT1/.idea/workspace.xml
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/ACTV1/AStarState.java">
       <provider selected="true" editor-type-id="text-editor">
+<<<<<<< Updated upstream:ACT1/ACT1/.idea/workspace.xml
         <state relative-caret-position="40">
           <caret line="2" selection-start-line="2" selection-end-line="3" selection-end-column="1" />
+=======
+        <state relative-caret-position="684">
+          <caret line="36" selection-start-line="36" selection-end-line="36" />
+>>>>>>> Stashed changes:ACT1/.idea/workspace.xml
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/ACTV1/Utils.java">
       <provider selected="true" editor-type-id="text-editor">
+<<<<<<< Updated upstream:ACT1/ACT1/.idea/workspace.xml
         <state relative-caret-position="2300">
           <caret line="93" column="68" selection-start-line="93" selection-start-column="68" selection-end-line="93" selection-end-column="68" />
         </state>
@@ -255,11 +304,16 @@
             <element signature="e#7982#7983#0" expanded="true" />
             <element signature="e#8014#8015#0" expanded="true" />
           </folding>
+=======
+        <state relative-caret-position="817">
+          <caret line="43" selection-start-line="43" selection-end-line="43" />
+>>>>>>> Stashed changes:ACT1/.idea/workspace.xml
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/ACTV1/BFS.java">
       <provider selected="true" editor-type-id="text-editor">
+<<<<<<< Updated upstream:ACT1/ACT1/.idea/workspace.xml
         <state relative-caret-position="623">
           <caret line="57" column="17" selection-start-line="57" selection-start-column="17" selection-end-line="57" selection-end-column="17" />
         </state>
@@ -273,6 +327,10 @@
             <element signature="e#1382#1383#0" expanded="true" />
             <element signature="e#1426#1427#0" expanded="true" />
           </folding>
+=======
+        <state relative-caret-position="834">
+          <caret line="148" column="18" selection-start-line="148" selection-start-column="18" selection-end-line="148" selection-end-column="18" />
+>>>>>>> Stashed changes:ACT1/.idea/workspace.xml
         </state>
       </provider>
     </entry>
