@@ -1,4 +1,4 @@
-      Characteristics of Dataset
+      Characteristics of dataset
       ==========================
 
 The files for the dataset represent a individual trial performed by a subject wearing 

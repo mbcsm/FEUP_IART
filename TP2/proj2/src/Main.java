@@ -12,7 +12,7 @@ public class Main {
     private static String datasetName = "board10.txt";
 
     public static void main(String[] args) throws CloneNotSupportedException {
-        runC45();
+        runKNN();
     }
 
     /**
@@ -27,11 +27,35 @@ public class Main {
 
         long startTime = System.currentTimeMillis();
 
-        Board mBoard = new Board();
-        mBoard.buildMatrixFromFile(datasetName);
 
-        C45 C45 = new C45();
+        C45 mC45 = new C45();
 
+
+        long stopTime = System.currentTimeMillis();
+        long elapsedTime = stopTime - startTime;
+
+        System.out.println("TIME SPENT = " + elapsedTime + "ms");
+    }
+
+
+    /**
+     * Runs the A* Algorithm and displays the data from it
+     * @throws CloneNotSupportedException
+     */
+    private static void runKNN() throws CloneNotSupportedException {
+
+        System.out.println("=====================================");
+        System.out.println("               KNN                  ");
+        System.out.println("=====================================");
+
+        long startTime = System.currentTimeMillis();
+
+        KNN mKNN = new KNN();
+        try {
+            mKNN.start();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         long stopTime = System.currentTimeMillis();
         long elapsedTime = stopTime - startTime;
