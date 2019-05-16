@@ -13,6 +13,35 @@ public class Main {
 
     public static void main(String[] args) throws CloneNotSupportedException {
         runKNN();
+        runC45();
+        runNN();
+    }
+
+    /**
+     * Runs the A* Algorithm and displays the data from it
+     * @throws CloneNotSupportedException
+     */
+    private static void runNN() throws CloneNotSupportedException {
+
+        System.out.println("=====================================");
+        System.out.println("                NN                   ");
+        System.out.println("=====================================");
+
+        long startTime = System.currentTimeMillis();
+
+
+        NN mNN = new NN();
+        try {
+            mNN.start();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+
+        long stopTime = System.currentTimeMillis();
+        long elapsedTime = stopTime - startTime;
+
+        System.out.println("TIME SPENT = " + elapsedTime + "ms");
     }
 
     /**
@@ -29,6 +58,11 @@ public class Main {
 
 
         C45 mC45 = new C45();
+        try {
+            mC45.start();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
 
         long stopTime = System.currentTimeMillis();

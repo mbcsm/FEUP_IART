@@ -1,3 +1,15 @@
+@relation old_healthy_people
+@attribute time numeric
+@attribute acceleration_frontal numeric
+@attribute acceleration_vertical numeric
+@attribute acceleration_lateral numeric
+@attribute antenna_id numeric
+@attribute signal_strength numeric
+@attribute phase numeric
+@attribute frequency numeric
+@attribute activity numeric
+
+@data
 0,-0.044557,0.93932,0.11175,1,-58,0.17794,920.75,4
 0.25,-0.044557,0.93932,0.11175,1,-60,0.4694,920.25,4
 0.75,-0.044557,0.93932,0.11175,3,-68.5,0.15033,923.25,1

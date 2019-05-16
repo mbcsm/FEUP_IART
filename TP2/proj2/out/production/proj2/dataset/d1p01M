@@ -1,6 +1,3 @@
-%% Monthly totals of international airline passengers (in thousands) for
-%% 1949-1960.
-
 @relation old_healthy_people
 @attribute time numeric
 @attribute acceleration_frontal numeric
