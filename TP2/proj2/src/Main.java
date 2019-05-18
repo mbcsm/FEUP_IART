@@ -1,3 +1,10 @@
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.ChartPanel;
+import org.jfree.chart.JFreeChart;
+import org.jfree.chart.plot.PlotOrientation;
+import org.jfree.data.category.DefaultCategoryDataset;
+
+import javax.swing.*;
 import java.util.List;
 
 /**
@@ -10,18 +17,26 @@ import java.util.List;
 public class Main {
 
     private static String datasetName = "board10.txt";
+    static int KNN_NUMBER_INSTANCES = 259;
+    static int ARGUMENT_GOAL_INDEX = 8;
 
     public static void main(String[] args) throws CloneNotSupportedException {
-        runKNN();
-        runC45();
-        runNN();
+        double percentageKNN = runKNN();
+        double percentageC45 = runC45();
+        double percentageNN = runNN();
+
+        try {
+            BarChart.main(percentageNN, percentageC45, percentageKNN);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     /**
      * Runs the A* Algorithm and displays the data from it
      * @throws CloneNotSupportedException
      */
-    private static void runNN() throws CloneNotSupportedException {
+    private static double runNN() throws CloneNotSupportedException {
 
         System.out.println("=====================================");
         System.out.println("                NN                   ");
@@ -42,13 +57,14 @@ public class Main {
         long elapsedTime = stopTime - startTime;
 
         System.out.println("TIME SPENT = " + elapsedTime + "ms");
+        return mNN.getCorrectPredictionsPercentage();
     }
 
     /**
      * Runs the A* Algorithm and displays the data from it
      * @throws CloneNotSupportedException
      */
-    private static void runC45() throws CloneNotSupportedException {
+    private static double runC45() throws CloneNotSupportedException {
 
         System.out.println("=====================================");
         System.out.println("               C4.5                  ");
@@ -69,6 +85,8 @@ public class Main {
         long elapsedTime = stopTime - startTime;
 
         System.out.println("TIME SPENT = " + elapsedTime + "ms");
+
+        return mC45.getCorrectPredictionsPercentage();
     }
 
 
@@ -76,7 +94,7 @@ public class Main {
      * Runs the A* Algorithm and displays the data from it
      * @throws CloneNotSupportedException
      */
-    private static void runKNN() throws CloneNotSupportedException {
+    private static double runKNN() throws CloneNotSupportedException {
 
         System.out.println("=====================================");
         System.out.println("               KNN                  ");
@@ -95,6 +113,6 @@ public class Main {
         long elapsedTime = stopTime - startTime;
 
         System.out.println("TIME SPENT = " + elapsedTime + "ms");
+        return mKNN.getCorrectPredictionsPercentage();
     }
-
 }

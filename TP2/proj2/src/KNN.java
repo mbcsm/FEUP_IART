@@ -9,6 +9,7 @@ import java.io.FileReader;
 import java.util.ArrayList;
 
 public class KNN {
+    private double correctPredictionsPercentage = 0.0;
     private static BufferedReader readDataFile(String filename) {
         BufferedReader inputReader = null;
 
@@ -21,39 +22,58 @@ public class KNN {
         return inputReader;
     }
 
-    public void start() throws Exception {
-        ArrayList<Instance> instanceArrayList = new ArrayList();
-        BufferedReader datafile = readDataFile("src/dataset/d1p01M");
+    private ArrayList<Instance> instanceArrayList = new ArrayList<>();
+    private Classifier ibk = new IBk();
 
+    void start() throws Exception {
+        BufferedReader datafile = readDataFile("src/dataset/continous/d1p02M");
         Instances data = new Instances(datafile);
-        data.setClassIndex(data.numAttributes() - 1);
+        data.setClassIndex(Main.ARGUMENT_GOAL_INDEX);
 
-        for(int i = 0; i < 10; i ++){
-            int random_id = (int)Math.random() * (int)datafile.lines().count() + 1;
+        for(int i = 0; i < Main.KNN_NUMBER_INSTANCES; i ++){
+            int random_id = (int) (Math.random() * (int) datafile.lines().count()) + 1;
             instanceArrayList.add(data.instance(random_id));
             data.delete(random_id);
         }
 
 
-        Classifier ibk = new IBk();
         ibk.buildClassifier(data);
 
 
+        displayData();
+    }
 
-        ArrayList<PointObject> originalArrayList = new ArrayList();
-        ArrayList<PointObject> knnArrayList = new ArrayList();
+    private void displayData() throws Exception {
+        ArrayList<PointObject> originalArrayList = new ArrayList<>();
+        ArrayList<PointObject> predictionArrayList = new ArrayList<>();
 
         int id = 0;
+        int totalCorrectAnswers = 0;
 
         for(Instance mInstance : instanceArrayList){
-            double class1 = ibk.classifyInstance(mInstance);
-            System.out.println("ID: " + mInstance.toString(0) + " | " + class1);
-            originalArrayList.add(new PointObject(id, Double.valueOf(mInstance.toString(data.numAttributes() - 5))));
-            knnArrayList.add(new PointObject(id, class1));
+            double predictedValue = ibk.classifyInstance(mInstance);
+            double originalValue = Double.valueOf(mInstance.toString(Main.ARGUMENT_GOAL_INDEX));
+
+
+            PointObject mOriginalPoint = new PointObject(id, originalValue);
+            PointObject mPredictedPoint = new PointObject(id, predictedValue);
+            originalArrayList.add(mOriginalPoint);
+            predictionArrayList.add(mPredictedPoint);
+
+            if(Math.round(originalValue) == Math.round(predictedValue)){
+                totalCorrectAnswers++;
+            }
             id++;
         }
 
-        Chart.start(originalArrayList, knnArrayList);
-
+        correctPredictionsPercentage = (double) totalCorrectAnswers / Main.KNN_NUMBER_INSTANCES;
+        //display metrics
+        System.out.println("correct answers: " + totalCorrectAnswers);
+        System.out.println("Instances: " + Main.KNN_NUMBER_INSTANCES);
+        System.out.println("Correct Percentage: " + correctPredictionsPercentage);
+        Chart.start(originalArrayList, predictionArrayList, "KNN");
+    }
+    public double getCorrectPredictionsPercentage() {
+        return correctPredictionsPercentage;
     }
 }

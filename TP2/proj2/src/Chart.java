@@ -21,9 +21,11 @@ public class Chart extends JFrame {
 
     ArrayList<PointObject> originalArrayList;
     ArrayList<PointObject> createdArrayList;
-    public Chart(ArrayList<PointObject> originalArrayList, ArrayList<PointObject> createdArrayList) {
+    String name;
+    public Chart(ArrayList<PointObject> originalArrayList, ArrayList<PointObject> createdArrayList, String name) {
         this.originalArrayList = originalArrayList;
         this.createdArrayList = createdArrayList;
+        this.name = name;
         initUI();
     }
 
@@ -37,7 +39,7 @@ public class Chart extends JFrame {
         add(chartPanel);
 
         pack();
-        setTitle("Line chart");
+        setTitle(name + "prediction");
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
@@ -51,7 +53,7 @@ public class Chart extends JFrame {
         }
 
 
-        XYSeries series2 = new XYSeries("knn");
+        XYSeries series2 = new XYSeries(name);
         for(PointObject mPoint : createdArrayList){
             series2.add(mPoint.id, mPoint.value);
         }
@@ -66,7 +68,7 @@ public class Chart extends JFrame {
     private JFreeChart createChart(final XYDataset dataset) {
 
         JFreeChart chart = ChartFactory.createXYLineChart(
-                "Deviation",
+                name + "prediction",
                 "id",
                 "value",
                 dataset,
@@ -98,10 +100,11 @@ public class Chart extends JFrame {
         plot.setRangeGridlinesVisible(true);
         plot.setDomainGridlinesVisible(true);
 
+
         chart.getLegend().setFrame(BlockBorder.NONE);
 
-        chart.setTitle(new TextTitle("Deviation",
-                        new Font("Serif", Font.BOLD, 18)
+        chart.setTitle(new TextTitle(name,
+                        new Font("Serif", Font.BOLD, 26)
                 )
         );
 
@@ -109,10 +112,9 @@ public class Chart extends JFrame {
     }
 
 
-    static void start(ArrayList<PointObject> originalArrayList, ArrayList<PointObject> createdArrayList) {
-
+    static void start(ArrayList<PointObject> originalArrayList, ArrayList<PointObject> createdArrayList, String name) {
         SwingUtilities.invokeLater(() -> {
-            Chart ex = new Chart(originalArrayList, createdArrayList);
+            Chart ex = new Chart(originalArrayList, createdArrayList, name);
             ex.setVisible(true);
         });
     }

@@ -1,17 +1,19 @@
 import weka.classifiers.evaluation.Evaluation;
 import weka.classifiers.functions.MultilayerPerceptron;
+import weka.core.Instance;
 import weka.core.Instances;
-import weka.core.Utils;
 
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
-import java.math.BigDecimal;
+import java.util.ArrayList;
 
-public class NN {
+class NN {
 
-    public static BufferedReader readDataFile(String filename) {
+    private double correctPredictionsPercentage = 0.0;
+
+    private static BufferedReader readDataFile(String filename) {
         BufferedReader inputReader = null;
 
         try {
@@ -22,59 +24,43 @@ public class NN {
 
         return inputReader;
     }
-    public void start(){
+
+    Instances trainData;
+    Instances testData;
+    MultilayerPerceptron mlp;
+    void start(){
         //network variables
         try{
 
             //prepare historical data
             //Get File
-            BufferedReader reader = readDataFile("src/dataset/d1p01M");
-            Instances data = new Instances(reader);
+            BufferedReader reader = readDataFile("src/dataset/continous/d1p01M");
+            Instances trainData = new Instances(reader);
             reader.close();
 
-            data.setClassIndex(data.numAttributes() - 1); //final attribute in a line stands for output
+            trainData.setClassIndex(trainData.numAttributes() - 1); //final attribute in a line stands for output
 
             //------------------------------
             //network training
             //deactivate this block to use already trained network
-            MultilayerPerceptron mlp = new MultilayerPerceptron();
+            mlp = new MultilayerPerceptron();
 
             //Setting Parameters
             mlp.setLearningRate(0.1);
-            mlp.setMomentum(0.1);
-            mlp.setTrainingTime(20000);
-            mlp.setHiddenLayers("10");
-            mlp.buildClassifier(data);
+            mlp.setMomentum(0.2);
+            mlp.setTrainingTime(10000);
+            mlp.setHiddenLayers("5");
+            mlp.buildClassifier(trainData);
 
 
 
-            BufferedReader reader2 = readDataFile("src/dataset/d1p02M");
-            Instances data2 = new Instances(reader2);
+            BufferedReader reader2 = readDataFile("src/dataset/continous/d1p02M");
+            testData = new Instances(reader2);
             reader.close();
-            data2.setClassIndex(data.numAttributes() - 1);
+            testData.setClassIndex(Main.ARGUMENT_GOAL_INDEX);
 
-            int totalCorrectAnswers = 0;
-            for(int i=0;i<data2.numInstances();i++){
+            DisplayData();
 
-                double actual = data2.instance(i).classValue();
-                double prediction = mlp.distributionForInstance(data2.instance(i))[0];
-
-                if(actual == Math.round(prediction)){
-                    totalCorrectAnswers++;
-                }
-                System.out.println(actual+"\t"+prediction);
-
-            }
-
-
-            //success metrics
-            Evaluation eval = new Evaluation(data2);
-            eval.evaluateModel(mlp, data2);
-
-            //display metrics
-            System.out.println("correct answers: " + totalCorrectAnswers);
-            System.out.println("Correlation: "+eval.correlationCoefficient());
-            System.out.println("Instances: "+eval.numInstances());
         }
         catch(Exception ex){
 
@@ -82,5 +68,37 @@ public class NN {
 
         }
 
+    }
+
+    private void DisplayData() throws Exception {
+        ArrayList<PointObject> originalArrayList = new ArrayList();
+        ArrayList<PointObject> predictionArrayList = new ArrayList();
+
+        int id = 0;
+
+        int totalCorrectAnswers = 0;
+        for(int i=0; i < testData.numInstances(); i++){
+
+            double actual = testData.instance(i).classValue();
+            double prediction = mlp.distributionForInstance(testData.instance(i))[0];
+
+            originalArrayList.add(new PointObject(id, actual));
+            predictionArrayList.add(new PointObject(id, Math.round(prediction)));
+
+            if(actual == Math.round(prediction)){
+                totalCorrectAnswers++;
+            }
+            id++;
+        }
+        correctPredictionsPercentage = (double) totalCorrectAnswers / testData.numInstances();
+
+        //display metrics
+        System.out.println("correct answers: " + totalCorrectAnswers);
+        System.out.println("Instances: " + testData.numInstances());
+        System.out.println("Correct Percentage: " + (double) totalCorrectAnswers / testData.numInstances());
+        Chart.start(originalArrayList, predictionArrayList, "NN");
+    }
+    public double getCorrectPredictionsPercentage() {
+        return correctPredictionsPercentage;
     }
 }

@@ -1,11 +1,13 @@
 import weka.classifiers.Classifier;
 import weka.classifiers.evaluation.Evaluation;
+import weka.classifiers.evaluation.Prediction;
 import weka.classifiers.trees.J48;
 import weka.core.Instances;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
@@ -16,9 +18,11 @@ import java.util.Random;
  * welcomed to change them.
  *
  */
-public class C45 {
+class C45 {
 
-    public static BufferedReader readDataFile(String filename) {
+    private double correctPredictionsPercentage = 0.0;
+
+    private static BufferedReader readDataFile(String filename) {
         BufferedReader inputReader = null;
 
         try {
@@ -30,51 +34,63 @@ public class C45 {
         return inputReader;
     }
 
-    public void start() throws Exception {
+    private Instances testData;
+    private Instances trainData;
+    ArrayList<Prediction> predictionArrayList;
+    void start() throws Exception {
 
-        //Get File
-        BufferedReader reader = readDataFile("src/dataset/d1p01M");
 
-        //Get the data
-        Instances data = new Instances(reader);
-        reader.close();
-
-        //Setting class attribute
-        data.setClassIndex(data.numAttributes() - 1);
+        BufferedReader trainFile = readDataFile("src/dataset/discrete/d1p01M");
+        trainData = new Instances(trainFile);
+        trainData.setClassIndex(Main.ARGUMENT_GOAL_INDEX);
 
         //Make tree
-        J48 tree = new J48();
-        String[] options = new String[1];
-        options[0] = "-U";
-        tree.setOptions(options);
-        tree.buildClassifier(data);
-
-        //Print tree
-        System.out.println(tree);
+        Classifier cls = new J48();
+        cls.buildClassifier(trainData);
 
         //Predictions with test and training set of data
-
-        BufferedReader datafile = readDataFile("src/dataset/d1p01M");
-        BufferedReader datafile2 = readDataFile("src/dataset/d1p03M");
-        Instances train = new Instances(datafile);
-        Instances train2 = new Instances(datafile2);
-        train.setClassIndex(data.numAttributes() - 1);
-        train2.setClassIndex(data.numAttributes() - 1);
-
-
-        BufferedReader testfile = readDataFile("src/dataset/d1p02M");
-        Instances test = new Instances(testfile);
-        test.setClassIndex(data.numAttributes() - 1);
-
+        BufferedReader testFile = readDataFile("src/dataset/discrete/d1p02M");
+        testData = new Instances(testFile);
+        testData.setClassIndex(Main.ARGUMENT_GOAL_INDEX);
 
         // train classifier
-        Classifier cls = new J48();
-        cls.buildClassifier(train);
-        cls.buildClassifier(train2);
-        // evaluate classifier and print some statistics
-        Evaluation eval = new Evaluation(train);
-        eval.evaluateModel(cls, test);
+        Evaluation eval = new Evaluation(trainData);
+        eval.evaluateModel(cls, testData);
+        predictionArrayList = eval.predictions();
+        displayData();
+    }
 
-        System.out.println(eval.toSummaryString("\nResults\n======\n", false) + "________-" +  eval.predictions().get(0).predicted());
+    private void displayData() throws Exception {
+        ArrayList<PointObject> originalArrayList = new ArrayList();
+        ArrayList<PointObject> predictionArrayList = new ArrayList();
+
+        int id = 0;
+        int totalCorrectAnswers = 0;
+
+        for(int i=0; i < testData.numInstances(); i++){
+
+            double actual = testData.instance(i).classValue() + 1;
+            double prediction = this.predictionArrayList.get(i).predicted() + 1;
+
+            originalArrayList.add(new PointObject(id, actual));
+            predictionArrayList.add(new PointObject(id, prediction));
+
+            if(actual == prediction){
+                totalCorrectAnswers++;
+            }
+            id++;
+        }
+
+        correctPredictionsPercentage = (double) totalCorrectAnswers / testData.numInstances();
+
+        //display metrics
+        System.out.println("correct answers: " + totalCorrectAnswers);
+        System.out.println("Instances: " + testData.numInstances());
+        System.out.println("Correct Percentage: " + correctPredictionsPercentage);
+        Chart.start(originalArrayList, predictionArrayList, "C4.5");
+    }
+
+    public double getCorrectPredictionsPercentage() {
+        return correctPredictionsPercentage;
     }
 }

@@ -2,12 +2,138 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="aafb739d-287b-4c4b-abf7-eedc4626808a" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/src/dataset/discrete/d1p01M" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/dataset/discrete/d1p02M" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/dataset/discrete/d1p03M" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/dataset/discrete/d1p04M" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/proj2/dataset/README.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/proj2/dataset/d1p01M" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/proj2/dataset/d1p02M" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/proj2/dataset/d1p03M" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/proj2/dataset/d1p04M" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/proj2/dataset/d1p05M" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/proj2/dataset/d1p06M" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/proj2/dataset/d1p07M" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/proj2/dataset/d1p08F" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/proj2/dataset/d1p09F" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/proj2/dataset/d1p10F" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/proj2/dataset/d1p11F" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/proj2/dataset/d1p12F" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/proj2/dataset/d1p13F" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/proj2/dataset/d1p14F" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/proj2/dataset/d1p15F" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/proj2/dataset/d1p16F" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/proj2/dataset/d1p17F" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/proj2/dataset/d1p18F" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/proj2/dataset/d1p19F" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/proj2/dataset/d1p20F" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/proj2/dataset/d1p21F" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/proj2/dataset/d1p22F" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/proj2/dataset/d1p23F" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/proj2/dataset/d1p24F" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/proj2/dataset/d1p25F" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/proj2/dataset/d1p26F" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/proj2/dataset/d1p27F" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/proj2/dataset/d1p28F" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/proj2/dataset/d1p29F" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/proj2/dataset/d1p30F" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/proj2/dataset/d1p31F" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/proj2/dataset/d1p32F" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/proj2/dataset/d1p33F" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/proj2/dataset/d1p34F" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/proj2/dataset/d1p35F" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/proj2/dataset/d1p36M" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/proj2/dataset/d1p37M" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/proj2/dataset/d1p38M" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/proj2/dataset/d1p39M" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/proj2/dataset/d1p40M" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/proj2/dataset/d1p41M" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/proj2/dataset/d1p42M" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/proj2/dataset/d1p43M" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/proj2/dataset/d1p44M" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/proj2/dataset/d1p45M" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/proj2/dataset/d1p46M" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/proj2/dataset/d1p47M" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/proj2/dataset/d1p48M" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/proj2/dataset/d1p49F" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/proj2/dataset/d1p50F" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/proj2/dataset/d1p51F" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/proj2/dataset/d1p52F" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/proj2/dataset/d1p53F" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/proj2/dataset/d1p54F" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/proj2/dataset/d1p55F" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/proj2/dataset/d1p56F" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/proj2/dataset/d1p57F" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/proj2/dataset/d1p58F" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/proj2/dataset/d1p59F" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/proj2/dataset/d1p60F" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/C45.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/C45.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Chart.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Chart.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/KNN.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/KNN.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/dataset/d1p01M" beforeDir="false" afterPath="$PROJECT_DIR$/src/dataset/d1p01M" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/dataset/d1p02M" beforeDir="false" afterPath="$PROJECT_DIR$/src/dataset/d1p02M" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/dataset/d1p03M" beforeDir="false" afterPath="$PROJECT_DIR$/src/dataset/d1p03M" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/dataset/d1p04M" beforeDir="false" afterPath="$PROJECT_DIR$/src/dataset/d1p04M" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/NN.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/NN.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dataset/README.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dataset/d1p01M" beforeDir="false" afterPath="$PROJECT_DIR$/src/dataset/continous/d1p01M" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dataset/d1p02M" beforeDir="false" afterPath="$PROJECT_DIR$/src/dataset/continous/d1p02M" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dataset/d1p03M" beforeDir="false" afterPath="$PROJECT_DIR$/src/dataset/continous/d1p03M" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dataset/d1p04M" beforeDir="false" afterPath="$PROJECT_DIR$/src/dataset/continous/d1p04M" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dataset/d1p05M" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dataset/d1p06M" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dataset/d1p07M" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dataset/d1p08F" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dataset/d1p09F" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dataset/d1p10F" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dataset/d1p11F" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dataset/d1p12F" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dataset/d1p13F" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dataset/d1p14F" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dataset/d1p15F" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dataset/d1p16F" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dataset/d1p17F" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dataset/d1p18F" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dataset/d1p19F" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dataset/d1p20F" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dataset/d1p21F" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dataset/d1p22F" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dataset/d1p23F" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dataset/d1p24F" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dataset/d1p25F" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dataset/d1p26F" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dataset/d1p27F" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dataset/d1p28F" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dataset/d1p29F" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dataset/d1p30F" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dataset/d1p31F" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dataset/d1p32F" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dataset/d1p33F" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dataset/d1p34F" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dataset/d1p35F" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dataset/d1p36M" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dataset/d1p37M" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dataset/d1p38M" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dataset/d1p39M" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dataset/d1p40M" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dataset/d1p41M" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dataset/d1p42M" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dataset/d1p43M" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dataset/d1p44M" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dataset/d1p45M" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dataset/d1p46M" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dataset/d1p47M" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dataset/d1p48M" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dataset/d1p49F" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dataset/d1p50F" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dataset/d1p51F" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dataset/d1p52F" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dataset/d1p53F" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dataset/d1p54F" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dataset/d1p55F" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dataset/d1p56F" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dataset/d1p57F" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dataset/d1p58F" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dataset/d1p59F" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dataset/d1p60F" beforeDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -21,17 +147,20 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Main.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="281">
-              <caret line="15" column="8" selection-start-line="15" selection-start-column="8" selection-end-line="15" selection-end-column="8" />
+            <state relative-caret-position="551">
+              <caret line="30" column="12" selection-start-line="30" selection-start-column="12" selection-end-line="30" selection-end-column="32" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/NN.java">
+        <entry file="file://$PROJECT_DIR$/src/BarChart.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="158">
-              <caret line="43" column="30" selection-start-line="43" selection-start-column="30" selection-end-line="43" selection-end-column="30" />
+            <state relative-caret-position="416">
+              <caret line="29" column="85" selection-start-line="29" selection-start-column="85" selection-end-line="29" selection-end-column="85" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -42,8 +171,44 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Chart.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1008">
-              <caret line="82" column="44" selection-start-line="82" selection-start-column="44" selection-end-line="82" selection-end-column="44" />
+            <state relative-caret-position="361">
+              <caret line="19" column="33" lean-forward="true" selection-start-line="19" selection-start-column="18" selection-end-line="19" selection-end-column="33" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/NN.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-1180">
+              <caret line="14" selection-start-line="14" selection-end-line="14" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/KNN.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="340">
+              <caret line="68" column="52" lean-forward="true" selection-start-line="68" selection-end-line="69" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/C45.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="498">
+              <caret line="91" lean-forward="true" selection-start-line="91" selection-end-line="94" selection-end-column="5" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -60,6 +225,11 @@
       </list>
     </option>
   </component>
+  <component name="FindInProjectRecents">
+    <findStrings>
+      <find>data</find>
+    </findStrings>
+  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../.." />
   </component>
@@ -70,15 +240,20 @@
         <option value="$PROJECT_DIR$/src/Values.java" />
         <option value="$PROJECT_DIR$/src/Board.java" />
         <option value="$PROJECT_DIR$/src/PointObject.java" />
-        <option value="$PROJECT_DIR$/src/Chart.java" />
-        <option value="$PROJECT_DIR$/src/KNN.java" />
-        <option value="$PROJECT_DIR$/src/C45.java" />
         <option value="$PROJECT_DIR$/src/dataset/d1p01M" />
         <option value="$PROJECT_DIR$/src/dataset/d1p02M" />
         <option value="$PROJECT_DIR$/src/dataset/d1p03M" />
         <option value="$PROJECT_DIR$/src/dataset/d1p04M" />
-        <option value="$PROJECT_DIR$/src/Main.java" />
+        <option value="$PROJECT_DIR$/src/dataset/discrete/d1p01M" />
+        <option value="$PROJECT_DIR$/src/dataset/discrete/d1p04M" />
+        <option value="$PROJECT_DIR$/src/dataset/discrete/d1p03M" />
+        <option value="$PROJECT_DIR$/src/dataset/discrete/d1p02M" />
+        <option value="$PROJECT_DIR$/src/Chart.java" />
+        <option value="$PROJECT_DIR$/src/C45.java" />
+        <option value="$PROJECT_DIR$/src/KNN.java" />
         <option value="$PROJECT_DIR$/src/NN.java" />
+        <option value="$PROJECT_DIR$/src/Main.java" />
+        <option value="$PROJECT_DIR$/src/BarChart.java" />
       </list>
     </option>
   </component>
@@ -112,6 +287,20 @@
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="dataset" type="462c0819:PsiDirectoryNode" />
             </path>
+            <path>
+              <item name="proj2" type="b2602c69:ProjectViewProjectNode" />
+              <item name="proj2" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="dataset" type="462c0819:PsiDirectoryNode" />
+              <item name="continous" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="proj2" type="b2602c69:ProjectViewProjectNode" />
+              <item name="proj2" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="dataset" type="462c0819:PsiDirectoryNode" />
+              <item name="discrete" type="462c0819:PsiDirectoryNode" />
+            </path>
           </expand>
           <select />
         </subPane>
@@ -124,7 +313,7 @@
     <property name="Repository.Attach.Annotations" value="false" />
     <property name="Repository.Attach.JavaDocs" value="false" />
     <property name="Repository.Attach.Sources" value="false" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1558023911876" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1558206136457" />
     <property name="last_opened_file_path" value="$USER_HOME$/Downloads/weka-3-8-3/weka.jar!/" />
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.15" />
@@ -135,6 +324,8 @@
       <recent name="" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/dataset/discrete" />
+      <recent name="$PROJECT_DIR$/src/dataset/continous" />
       <recent name="C:\Users\Manel\Desktop\FEUP\IART\FEUP_IART\TP2\proj2\src\Dataset" />
     </key>
   </component>
@@ -185,7 +376,7 @@
     <frame x="-4" y="0" width="1928" height="1054" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.31216648" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.13180363" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Designer" order="3" />
@@ -195,13 +386,13 @@
       <window_info anchor="bottom" id="Messages" order="0" weight="0.329718" />
       <window_info anchor="bottom" id="Message" order="1" />
       <window_info anchor="bottom" id="Find" order="2" weight="0.3286334" />
-      <window_info active="true" anchor="bottom" id="Run" order="3" visible="true" weight="0.35357916" />
-      <window_info anchor="bottom" id="Debug" order="4" weight="0.4" />
+      <window_info active="true" anchor="bottom" id="Run" order="3" sideWeight="0.4994664" visible="true" weight="0.28633407" />
+      <window_info anchor="bottom" id="Debug" order="4" weight="0.3991323" />
       <window_info anchor="bottom" id="Cvs" order="5" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="6" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="7" weight="0.329718" />
       <window_info anchor="bottom" id="Terminal" order="8" weight="0.329718" />
-      <window_info anchor="bottom" id="Event Log" order="9" side_tool="true" />
+      <window_info anchor="bottom" id="Event Log" order="9" sideWeight="0.50053364" side_tool="true" weight="0.35357916" />
       <window_info anchor="bottom" id="Version Control" order="10" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
@@ -267,16 +458,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/KNN.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="475">
-          <caret line="25" column="67" selection-start-line="25" selection-start-column="49" selection-end-line="25" selection-end-column="67" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/dataset/d1p01M">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="171">
@@ -305,27 +486,51 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Chart.java">
+    <entry file="file://$PROJECT_DIR$/src/dataset/continous/d1p01M">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/dataset/discrete/d1p04M">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1008">
-          <caret line="82" column="44" selection-start-line="82" selection-start-column="44" selection-end-line="82" selection-end-column="44" />
+        <state relative-caret-position="171">
+          <caret line="9" column="29" selection-start-line="9" selection-start-column="29" selection-end-line="9" selection-end-column="29" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/dataset/discrete/d1p03M">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="171">
+          <caret line="9" column="29" selection-start-line="9" selection-start-column="29" selection-end-line="9" selection-end-column="29" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/dataset/discrete/d1p02M">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="171">
+          <caret line="9" column="29" selection-start-line="9" selection-start-column="29" selection-end-line="9" selection-end-column="29" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/dataset/discrete/d1p01M">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="171">
+          <caret line="9" column="2" lean-forward="true" selection-start-line="9" selection-start-column="2" selection-end-line="9" selection-end-column="2" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/C45.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="498">
+          <caret line="91" lean-forward="true" selection-start-line="91" selection-end-line="94" selection-end-column="5" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Main.java">
+    <entry file="file://$PROJECT_DIR$/src/KNN.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="281">
-          <caret line="15" column="8" selection-start-line="15" selection-start-column="8" selection-end-line="15" selection-end-column="8" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/C45.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-151">
-          <caret line="33" lean-forward="true" selection-start-line="33" selection-end-line="39" selection-end-column="23" />
+        <state relative-caret-position="340">
+          <caret line="68" column="52" lean-forward="true" selection-start-line="68" selection-end-line="69" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -334,8 +539,38 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/NN.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="158">
-          <caret line="43" column="30" selection-start-line="43" selection-start-column="30" selection-end-line="43" selection-end-column="30" />
+        <state relative-caret-position="-1180">
+          <caret line="14" selection-start-line="14" selection-end-line="14" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Chart.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="361">
+          <caret line="19" column="33" lean-forward="true" selection-start-line="19" selection-start-column="18" selection-end-line="19" selection-end-column="33" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Main.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="551">
+          <caret line="30" column="12" selection-start-line="30" selection-start-column="12" selection-end-line="30" selection-end-column="32" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/BarChart.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="416">
+          <caret line="29" column="85" selection-start-line="29" selection-start-column="85" selection-end-line="29" selection-end-column="85" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
