@@ -26,7 +26,7 @@ public class KNN {
     private Classifier ibk = new IBk();
 
     void start() throws Exception {
-        BufferedReader datafile = readDataFile("src/dataset/continous/d1p02M");
+        BufferedReader datafile = readDataFile("src/dataset/continuous/" + Main.TEST_FILE_NAME);
         Instances data = new Instances(datafile);
         data.setClassIndex(Main.ARGUMENT_GOAL_INDEX);
 

@@ -2,14 +2,21 @@ import weka.classifiers.Classifier;
 import weka.classifiers.evaluation.Evaluation;
 import weka.classifiers.evaluation.Prediction;
 import weka.classifiers.trees.J48;
+import weka.core.Instance;
 import weka.core.Instances;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * Main Class Of the project, everything runs from here.
@@ -39,9 +46,32 @@ class C45 {
     ArrayList<Prediction> predictionArrayList;
     void start() throws Exception {
 
+        List<String> result = null;
+        try (Stream<Path> walk = Files.walk(Paths.get("src/dataset/discrete/"))) {
 
-        BufferedReader trainFile = readDataFile("src/dataset/discrete/d1p01M");
-        trainData = new Instances(trainFile);
+            result = walk.filter(Files::isRegularFile)
+                    .map(Path::toString).collect(Collectors.toList());
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        int filesAdded = 0, i = -1;
+       while( filesAdded < Main.C45_NN_NUMBER_TEST_FILES && i < result.size()){
+            i++;
+            if(result.get(i).equals("src/dataset/discrete/" + Main.TEST_FILE_NAME)){
+                continue;
+            }
+
+            filesAdded++;
+            BufferedReader trainFile = readDataFile(result.get(i));
+            if (trainData == null) {
+                trainData = new Instances(trainFile);
+                continue;
+            }
+            trainData.addAll(new Instances(trainFile));
+        }
+
         trainData.setClassIndex(Main.ARGUMENT_GOAL_INDEX);
 
         //Make tree
@@ -49,7 +79,7 @@ class C45 {
         cls.buildClassifier(trainData);
 
         //Predictions with test and training set of data
-        BufferedReader testFile = readDataFile("src/dataset/discrete/d1p02M");
+        BufferedReader testFile = readDataFile("src/dataset/discrete/" + Main.TEST_FILE_NAME);
         testData = new Instances(testFile);
         testData.setClassIndex(Main.ARGUMENT_GOAL_INDEX);
 

@@ -5,6 +5,8 @@ import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.data.category.DefaultCategoryDataset;
 
 import javax.swing.*;
+import java.io.*;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -16,11 +18,17 @@ import java.util.List;
  */
 public class Main {
 
-    private static String datasetName = "board10.txt";
-    static int KNN_NUMBER_INSTANCES = 259;
     static int ARGUMENT_GOAL_INDEX = 8;
+    static String TEST_FILE_NAME = "d1p01M";
+    static int C45_NN_NUMBER_TEST_FILES = 10;
 
-    public static void main(String[] args) throws CloneNotSupportedException {
+    static int KNN_NUMBER_INSTANCES = 259;
+    static double NN_LEARNING_RATE = 0.1;
+    static double NN_MOMENTUM = 0.4;
+    static int NN_TRAINING_TIME = 100;
+    static String NN_HIDDEN_LAYERS = "15";
+
+    public static void main(String[] args) throws CloneNotSupportedException, IOException {
         double percentageKNN = runKNN();
         double percentageC45 = runC45();
         double percentageNN = runNN();
